@@ -1,22 +1,22 @@
-{% for date in agenda %}
-    {% if date(date.dateEvent) > date('-1days') %}
+{% for evenement in agenda.events %}
+    {% if date(evenement.dateEvent) > date('-1days') %}
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{date.nom}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{date.dateEvent | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') | capitalize}}</h6>
-                {% if date.heureDebut is not null %} 
-                    <h6 class="card-subtitle mb-2 text-muted">{{date.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm")}}
-                        {% if date.heureFin is not null %} 
-                            - {{date.heureFin | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                <h5 class="card-title">{{evenement.nom}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{evenement.dateEvent | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') | capitalize}}</h6>
+                {% if evenement.heureDebut is not null %} 
+                    <h6 class="card-subtitle mb-2 text-muted">{{evenement.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                        {% if evenement.heureFin is not null %} 
+                            - {{evenement.heureFin | localizeddate('none', 'none', null, null, "k'h'mm")}}
                         {% endif %}    
                     </h6>
                 {% endif %}
-                <p class="card-text">{{date.lieu}}</p>                    
-                {% if date.commentaire is not null %}
-                    <p class="card-text">{{date.commentaire}}</p>
+                <p class="card-text">{{evenement.lieu}}</p>                    
+                {% if evenement.commentaire is not null %}
+                    <p class="card-text">{{evenement.commentaire}}</p>
                 {% endif %}
-                {% if date.lien is not null %}
-                    <a href="{{date.lien}}" class="card-link">En savoir plus</a>
+                {% if evenement.lien is not null %}
+                    <a href="{{evenement.lien}}" class="card-link">En savoir plus</a>
                 {% endif %}
             </div>                
         </div>

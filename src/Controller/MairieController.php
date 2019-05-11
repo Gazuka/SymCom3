@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Agenda;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MairieController extends AbstractController
 {
@@ -12,8 +13,13 @@ class MairieController extends AbstractController
      */
     public function index()
     {
+        //Récupération du repo de l'agenda
+        $repo = $this->getDoctrine()->getRepository(Agenda::class);
+        $agenda = $repo->findOneBy(array('nom' => 'Guesnain')); 
+
         return $this->render('mairie/index.html.twig', [
             'controller_name' => 'MairieController',
+            'agenda' => $agenda
         ]);
     }
 }

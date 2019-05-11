@@ -1,0 +1,42 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#home">Accueil du site</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Agenda</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ path('admin_agenda_agenda_new') }}">Ajouter un agenda</a>
+      <a class="dropdown-item" href="{{ path('admin_agenda_agendas_liste') }}">Voir les agendas</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{{ path('admin_agenda_evenement_new') }}">Ajouter un evenement</a>
+      <a class="dropdown-item" href="{{ path('admin_agenda_evenements_liste') }}">Voir les évènements</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Voir l'agenda</a>
+    </div>
+  </li>{#
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ path('menu_lien_add') }}">Ajouter un lien</a>
+      <a class="dropdown-item" href="{{ path('menu_menu_add') }}">Ajouter un menu</a>
+      <a class="dropdown-item" href="#">Modifier le menu</a>
+    </div>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Articles</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ path('article_article_add') }}">Ajouter un article</a>      
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Tous les articles</a>
+    </div>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Personnel</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ path('admin_personnel') }}">Ajouter une fonction</a>
+      <a class="dropdown-item" href="{{ path('admin_personnel') }}">Ajouter une personne</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Voir l'ensemble du personnel</a>
+    </div>
+  </li>#}
+</ul>

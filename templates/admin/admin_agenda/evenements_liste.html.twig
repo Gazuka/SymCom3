@@ -1,0 +1,37 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ evenements | length }} évenements :</p>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Agenda</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evenement in evenements %}
+                <tr> 
+                    <th scope="row">{{ evenement.id }}</th>
+                    <td>
+                        <a href="{{ path('admin_agenda_evenement_edit', { 'id': evenement.id }) }}">
+                            {{ evenement.nom }}
+                        </a>
+                    </td>
+                    <td>
+                        {% for agenda in evenement.agendas %}
+                            {{ agenda.nom }}                        
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
