@@ -1,0 +1,21 @@
+<ul class="nav nav-tabs">
+  {% for menu in menus %}
+    {% if menu.parent is null %}      
+      {% if menu.enfants | length < 1 %}
+        <li class="nav-item">
+          <a class="nav-link" href="/{{ menu.url }}">{{ menu.titre }}</a>
+        </li>
+      {% else %} 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/{{ menu.url }}" role="button" aria-haspopup="true" aria-expanded="false">{{ menu.titre }}</a>
+          <div class="dropdown-menu">
+            {% for enfant in menu.enfants %}
+              {% if enfant.url != '#' %}
+                <a class="dropdown-item" href="/{{ enfant.url }}">{{ enfant.titre }}</a>
+              {% endif %}
+            {% endfor %}          
+          </div>
+        </li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}

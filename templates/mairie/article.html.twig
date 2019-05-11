@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville de Guesnain - {{ article.titre }}{% endblock %}
+
+{% block body %}
+    <h3>{{ article.titre }}</h3>
+    <br/>
+    {{ article.contenu | raw }}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% for date in agenda %}
+    {% if date(date.dateEvent) > date('-1days') %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{date.nom}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{date.dateEvent | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') | capitalize}}</h6>
+                {% if date.heureDebut is not null %} 
+                    <h6 class="card-subtitle mb-2 text-muted">{{date.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                        {% if date.heureFin is not null %} 
+                            - {{date.heureFin | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                        {% endif %}    
+                    </h6>
+                {% endif %}
+                <p class="card-text">{{date.lieu}}</p>                    
+                {% if date.commentaire is not null %}
+                    <p class="card-text">{{date.commentaire}}</p>
+                {% endif %}
+                {% if date.lien is not null %}
+                    <a href="{{date.lien}}" class="card-link">En savoir plus</a>
+                {% endif %}
+            </div>                
+        </div>
+        {% if loop.index != loop.length %}
+                <br/>
+        {% endif %}
+    {% endif %}
+{% endfor %}
