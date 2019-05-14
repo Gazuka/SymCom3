@@ -1,0 +1,31 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ menus | length }} menus :</p>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for menu in menus %}
+                <tr> 
+                    <th scope="row">{{ menu.id }}</th>
+                    <td>
+                        <a href="{{ path('admin_menu_menu_edit', { 'id': menu.id }) }}">
+                            {{ menu.titre }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

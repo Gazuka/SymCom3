@@ -2,10 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Agenda;
 use App\Form\AgendaType;
 use App\Entity\AgendaEvent;
+use App\Repository\AgendaRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -23,7 +26,11 @@ class AgendaEventType extends AbstractType
             ->add('datePublication')
             ->add('publie')
             ->add('lien')
-            ->add('agendas')
+            ->add('agendas', EntityType::class, [
+                'class' => Agenda::class,
+                'multiple' => true,
+                'expanded' => true,
+            ]) 
         ;
     }
 

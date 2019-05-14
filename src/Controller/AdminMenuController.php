@@ -2,27 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\Agenda;
-use App\Form\AgendaType;
-use App\Entity\AgendaEvent;
-use App\Form\AgendaEventType;
-use App\Repository\AgendaRepository;
-use App\Repository\AgendaEventRepository;
+use App\Entity\Menu;
+use App\Form\MenuType;
+use App\Repository\MenuRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdminAgendaController extends AbstractController
+class AdminMenuController extends AbstractController
 {
     /**
-     * @Route("/admin/agenda", name="admin_agenda")
+     * @Route("/admin/menu", name="admin_menu")
      */
     public function index()
     {
-        return $this->render('admin_agenda/index.html.twig', [
-            'controller_name' => 'AdminAgendaController',
+        return $this->render('admin_menu/index.html.twig', [
+            'controller_name' => 'AdminMenuController',
         ]);
     }
 
@@ -109,91 +106,47 @@ class AdminAgendaController extends AbstractController
         ]);
     }
 
-    /** GESTION DES AGENDAS ************************************************************************************************************************************************************/
+    /** GESTION DES MENUS **************************************************************************************************************************************************************/
     /**
-     * Création d'un agenda
+     * Création d'un menu
      * 
-     * @Route("/admin/agenda/new", name="admin_agenda_agenda_new")
+     * @Route("/admin/menu/new", name="admin_menu_menu_new")
      *
      * @return Response
      */
-    public function creerAgenda(Request $request, ObjectManager $manager):Response {
-        $element = new Agenda();
-        $class = AgendaType::class;
+    public function creerMenu(Request $request, ObjectManager $manager):Response {
+        $element = new Menu();
+        $class = MenuType::class;
         $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_agenda_agendas_liste';
-        $titre = "Création d'un agenda";  
-        $dependances = array('Events' => 'Agenda');      
+        $pagederesultat = 'admin_menu_menus_liste';
+        $titre = "Création d'un menu";      
+        $dependances = null;
         return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
     }    
     /**
-     * Affiche l'ensemble des agendas
+     * Affiche l'ensemble des menus
      * 
-     * @Route("/admin/agendas", name="admin_agenda_agendas_liste")
+     * @Route("/admin/menus", name="admin_menu_menus_liste")
      *
      * @return Response
      */
-    public function recupererAgendas(AgendaRepository $repo):Response {
-        $elements = "agendas";
-        $titre = "Listing des agendas";
-        $pagederesultat = "admin/admin_agenda/agendas_liste.html.twig";
+    public function recupererMenus(MenuRepository $repo):Response {
+        $elements = "menus";
+        $titre = "Listing des menus";
+        $pagederesultat = "admin/admin_menu/menus_liste.html.twig";
         return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
     }
     /**
-     * Permet d'afficher le formulaire d'édition d'un agenda
+     * Permet d'afficher le formulaire d'édition d'un menu
      *
-     * @Route("/admin/admin_agenda/agenda/{id}/edit", name="admin_agenda_agenda_edit")
+     * @Route("/admin/admin_menu/menu/{id}/edit", name="admin_menu_menu_edit")
      * @return Response
      */
-    public function editAgenda(Agenda $agenda, Request $request, ObjectManager $manager):Response {
-        $element = $agenda;
-        $classType = AgendaType::class;
+    public function editMenu(Menu $menu, Request $request, ObjectManager $manager):Response {
+        $element = $menu;
+        $classType = MenuType::class;
         $pagederesultat = "admin/element_edit.html.twig";
-        $dependances = array('Events' => 'Agenda');
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
-    }
-
-    /** GESTION DES EVENEMENTS D'AGENDAS ***********************************************************************************************************************************************/
-    /**
-     * Création d'un evenement d'agenda
-     * 
-     * @Route("/admin/evenement/new", name="admin_agenda_evenement_new")
-     *
-     * @return Response
-     */
-    public function creerAgendaEvent(Request $request, ObjectManager $manager):Response {
-        $element = new AgendaEvent();
-        $class = AgendaEventType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_agenda_evenements_liste';
-        $titre = "Création d'un évenemeent d'agenda";
-        $dependances = array('Agendas' => 'Event');
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
-    }    
-    /**
-     * Affiche l'ensemble des évenements d'agendas
-     * 
-     * @Route("/admin/evenements", name="admin_agenda_evenements_liste")
-     *
-     * @return Response
-     */
-    public function recupererAgendaEvents(AgendaEventRepository $repo):Response {
-        $elements = "evenements";
-        $titre = "Listing des évenements d'agendas";
-        $pagederesultat = "admin/admin_agenda/evenements_liste.html.twig";
-        return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
-    }
-    /**
-     * Permet d'afficher le formulaire d'édition d'un évenement d'agenda
-     *
-     * @Route("/admin/admin_agenda/evenement/{id}/edit", name="admin_agenda_evenement_edit")
-     * @return Response
-     */
-    public function editAgendaevent(AgendaEvent $agendaevent, Request $request, ObjectManager $manager):Response {
-        $element = $agendaevent;
-        $classType = AgendaEventType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
-        $dependances = array('Agendas' => 'Event');        
+        $dependances = null;
         return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
     }
 }
