@@ -1,0 +1,88 @@
+#defilagenda {
+	position: relative;
+	margin-top: 25px; /*jerome*/
+	/*margin: 50px auto;
+	width: 960px;*/
+	/*background-color: red;*/
+}
+/********************************
+ * generic als elements styling
+ ********************************/
+.als-container {
+	position: relative;
+	width: 100%;
+	margin: 0px auto;
+}
+
+.als-viewport {
+	position: relative;
+	overflow: hidden;
+	margin: 0px auto;
+}
+
+.als-wrapper {
+	position: relative;
+	list-style: none;
+}
+
+.als-item {
+	position: relative;
+	display: block;
+	text-align: center;
+	cursor: pointer;
+	float: left;
+}
+
+.als-prev, .als-next {
+	position: absolute;
+	cursor: pointer;
+	clear: both;
+}
+
+
+/************************
+ * specific als element
+ * styling for #lista2
+ ***********************/
+
+#defilagenda {
+	margin-bottom: 80px;
+}
+
+#defilagenda .als-item {
+	margin: 10px 0px;
+	/*min-height: 152px;*/
+	/*min-width: 128px;*/
+}
+
+/*#defilagenda .als-item img {
+	position: relative;
+	display: block;
+	vertical-align: middle;
+	margin-bottom: 8px;
+}*/
+
+#defilagenda .als-prev, #defilagenda .als-next {
+	/*left: 460px;
+	width: 22px;
+	height: 15px;*/
+	width: 100%;
+	text-align: center;
+}
+
+#defilagenda .als-prev {
+	top: -25px;
+}
+
+#defilagenda .als-next {
+	bottom: -20px;
+}
+
+#defilagenda .als-item {
+	vertical-align: middle;
+	width: 100%;
+}
+
+#defilagenda .card {
+	text-align: left;
+}

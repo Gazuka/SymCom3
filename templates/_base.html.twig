@@ -4,8 +4,34 @@
         <meta charset="UTF-8">
         <title>{% block title %}Guesnain{% endblock %}</title>
         <link rel="stylesheet" href="/css/bootstrap.css"/>
+        <link rel="stylesheet" href="/css/_agenda.css"/>
         {% block stylesheets %}{% endblock %}
-    </head>
+
+        {% block javascripts %}
+                <script src="/js/bootstrap.js"></script>
+                <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+                <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+                <script type="text/javascript" src="/js/jquery.als-1.7.js"></script>
+        {% endblock %}
+
+        <script type="text/javascript">
+        	//Script pour le défilement de l'agenda
+            $(document).ready(function() 
+			{				
+				$("#defilagenda").als({
+					visible_items: 2,
+					scrolling_items: 1,
+					orientation: "vertical",
+					circular: "yes",
+					autoscroll: "yes",
+					start_from: 1
+				});
+			});
+        </script>
+
+</head>
     <body>
         <div class="container">
             <div class="row">
@@ -15,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                   {# {% include '_menu.html.twig' %} #}
+                   {% include '_menu.html.twig' %}
                 </div>
             </div>
             <div class="row">
@@ -40,13 +66,40 @@
                 </div>
             </div>
             
+
+
             
-            {% block javascripts %}
-                <script src="/js/bootstrap.js"></script>
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-            {% endblock %}
+<!--
+<section id="content">
+			<h2>Demo 2</h2>
+			<p>This list is composed by generic &lt;div&gt; elements</p>
+			<div id="lista2" class="als-container">
+				<span class="als-prev"><img src="images/thin_top_arrow_333.png" alt="prev" title="previous" /></span>
+				<div class="als-viewport">
+					<div class="als-wrapper">
+						<div class="als-item"><img src="images/als-images/calculator.png" alt="calculator" title="calculator" />calculator</div>
+						<div class="als-item"><img src="images/als-images/light_bulb.png" alt="light bulb" title="light bulb" />light bulb</div>
+						<div class="als-item"><img src="images/als-images/card.png" alt="card" title="card" />card</div>
+						<div class="als-item"><img src="images/als-images/chess.png" alt="chess" title="chess" />chess</div>
+						<div class="als-item"><img src="images/als-images/clock.png" alt="alarm clock" title="alarm clock" />alarm clock</div>
+						<div class="als-item"><img src="images/als-images/cut.png" alt="scissors" title="scissors" />scissors</div>
+						<div class="als-item"><img src="images/als-images/heart.png" alt="heart" title="heart" />heart</div>
+						<div class="als-item"><img src="images/als-images/map.png" alt="pin" title="pin" />pin</div>
+						<div class="als-item"><img src="images/als-images/mobile_phone.png" alt="mobile phone" title="mobile phone" />mobile phone</div>
+						<div class="als-item"><img src="images/als-images/camera.png" alt="camera" title="camera" />camera</div>
+						<div class="als-item"><img src="images/als-images/music_note.png" alt="music note" title="music note" />music note</div>
+						<div class="als-item"><img src="images/als-images/protection.png" alt="umbrella" title="umbrella" />umbrella</div>
+						<div class="als-item"><img src="images/als-images/television.png" alt="television" title="television" />television</div>
+					</div>
+				</div>
+				<span class="als-next"><img src="images/thin_bottom_arrow_333.png" alt="next" title="next" /></span>
+			</div>
+		</section>
+-->
+
+
+            
+            
         </div>
     </body>
 </html>

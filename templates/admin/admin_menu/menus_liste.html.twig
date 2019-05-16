@@ -13,6 +13,7 @@
             <tr>
             <th scope="col">#</th>
             <th scope="col">Nom</th>
+            <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +23,41 @@
                     <td>
                         <a href="{{ path('admin_menu_menu_edit', { 'id': menu.id }) }}">
                             {{ menu.titre }}
-                        </a>
+                        </a>                        
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_menu_categ_new', { 'id': menu.id }) }}">
+                            Ajouter un sous menu ({{ menu.categs | length }})
+                        </a>                        
+                        {% if menu.categs | length != 0 %}
+                            <ul>
+                                {% for categ in menu.categs %}
+                                    <li>
+                                        <a href="{{ path('admin_menu_categ_edit', { 'id': categ.id }) }}">
+                                            {{categ.titre}}
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="{{ path('admin_menu_lien_new', { 'id': categ.id }) }}">
+                                                    Ajouter un lien ({{ categ.liens | length }})
+                                                </a>
+                                                {% if menu.categs | length != 0 %}
+                                                    <ul>
+                                                        {% for lien in categ.liens %}
+                                                            <li>
+                                                                <a href="{{ path('admin_menu_lien_edit', { 'id': lien.id }) }}">
+                                                                    {{lien.titre}}
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

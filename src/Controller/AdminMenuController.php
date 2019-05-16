@@ -4,7 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Form\MenuType;
+use App\Entity\MenuLien;
+use App\Entity\MenuCateg;
+use App\Form\MenuLienType;
+use App\Form\MenuCategType;
 use App\Repository\MenuRepository;
+use App\Repository\MenuCategRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +54,7 @@ class AdminMenuController extends AbstractController
             $manager->flush();
             $this->addFlash(
                 'success',
-                "L'élément : <strong>{$element->getNom()}</strong> a bien été créé !"
+                "L'élément a bien été créé !"
             );
             //Affichage de la liste des elements apres l'ajout du nouveau
             return $this->redirectToRoute($pagederesultat);
@@ -97,7 +102,7 @@ class AdminMenuController extends AbstractController
             $manager->flush();
             $this->addFlash(
                 'success',
-                "L'élément' <strong>{$element->getNom()}</strong> a bien été enregistrée !"
+                "L'élément a bien été enregistrée !"
             );
         }
         return $this->render($pagederesultat, [
@@ -122,7 +127,8 @@ class AdminMenuController extends AbstractController
         $titre = "Création d'un menu";      
         $dependances = null;
         return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
-    }    
+    } 
+
     /**
      * Affiche l'ensemble des menus
      * 
@@ -136,6 +142,7 @@ class AdminMenuController extends AbstractController
         $pagederesultat = "admin/admin_menu/menus_liste.html.twig";
         return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
     }
+
     /**
      * Permet d'afficher le formulaire d'édition d'un menu
      *
@@ -145,7 +152,75 @@ class AdminMenuController extends AbstractController
     public function editMenu(Menu $menu, Request $request, ObjectManager $manager):Response {
         $element = $menu;
         $classType = MenuType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
+        $pagederesultat = "admin/admin_menu/menu_edit.html.twig";
+        $dependances = null;
+        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+    }
+
+    /** GESTION DES CATEGORIES DE MENUS ************************************************************************************************************************************************/
+    /**
+     * Création d'une catégorie de menu
+     * 
+     * @Route("/admin/menu/categ/{id}/new", name="admin_menu_categ_new")
+     *
+     * @return Response
+     */
+    public function creerMenuCateg(Request $request, ObjectManager $manager, MenuRepository $repoMenu, $id):Response {
+        $element = new MenuCateg();
+        $menu = $repoMenu->find($id);
+        $element->setMenu($menu);
+        $class = MenuCategType::class;
+        $pagedebase = 'admin/element_new.html.twig';
+        $pagederesultat = 'admin_menu_menus_liste';
+        $titre = "Création d'une catégorie pour le menu";      
+        $dependances = array('Menu' => 'MenuCateg');
+        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+    }  
+    
+    /**
+     * Permet d'afficher le formulaire d'édition d'une catégorie de menu
+     *
+     * @Route("/admin/admin_menu/menucateg/{id}/edit", name="admin_menu_categ_edit")
+     * @return Response
+     */
+    public function editMenuCateg(MenuCateg $menuCateg, Request $request, ObjectManager $manager):Response {
+        $element = $menuCateg;
+        $classType = MenuCategType::class;
+        $pagederesultat = "admin/admin_menu/menucateg_edit.html.twig";
+        $dependances = null;
+        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+    }
+
+    /** GESTION DES LIENS **************************************************************************************************************************************************************/
+    /**
+     * Création d'un lien d'une catégorie de menu
+     * 
+     * @Route("/admin/menu/lien/{id}/new", name="admin_menu_lien_new")
+     *
+     * @return Response
+     */
+    public function creerMenuLien(Request $request, ObjectManager $manager, MenuCategRepository $repoMenuCateg, $id):Response {
+        $element = new MenuLien();
+        $menuCateg = $repoMenuCateg->find($id);
+        $element->setCateg($menuCateg);
+        $class = MenuLienType::class;
+        $pagedebase = 'admin/element_new.html.twig';
+        $pagederesultat = 'admin_menu_menus_liste';
+        $titre = "Création d'un lien pour le menu";      
+        $dependances = array('Categ' => 'Lien');
+        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+    }  
+    
+    /**
+     * Permet d'afficher le formulaire d'édition d'un lien d'une catégorie de menu
+     *
+     * @Route("/admin/admin_menu/lien/{id}/edit", name="admin_menu_lien_edit")
+     * @return Response
+     */
+    public function editMenuLien(MenuLien $menuLien, Request $request, ObjectManager $manager):Response {
+        $element = $menuLien;
+        $classType = MenuLienType::class;
+        $pagederesultat = "admin/admin_menu/menulien_edit.html.twig";
         $dependances = null;
         return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
     }

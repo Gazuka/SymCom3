@@ -44,6 +44,11 @@ class MenuCateg
         $this->liens = new ArrayCollection();
     }
 
+    public function __tostring()
+    {
+        return $this->titre;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
