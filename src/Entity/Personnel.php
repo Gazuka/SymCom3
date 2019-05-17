@@ -50,6 +50,11 @@ class Personnel
         $this->fonctions = new ArrayCollection();
     }
 
+    public function __tostring()
+    {
+        return $this->nom." ".$this->prenom ;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

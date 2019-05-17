@@ -33,6 +33,11 @@ class PersonnelTelephone
      */
     private $personnels;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nom;
+
     public function __construct()
     {
         $this->personnels = new ArrayCollection();
@@ -89,6 +94,18 @@ class PersonnelTelephone
         if ($this->personnels->contains($personnel)) {
             $this->personnels->removeElement($personnel);
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

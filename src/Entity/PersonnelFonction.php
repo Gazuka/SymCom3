@@ -38,6 +38,11 @@ class PersonnelFonction
         $this->personnels = new ArrayCollection();
     }
 
+    public function __tostring()
+    {
+        return $this->nom." - ".$this->structure ;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

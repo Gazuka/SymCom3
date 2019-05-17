@@ -1,0 +1,27 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ville de Guesnain - La municipalité{% endblock %}
+
+{% block body %}
+    <div class="card-deck">
+        {% for elu in elus %}
+            <div class="card">
+                <img src="..." class="card-img-top" alt="{{ elu.nom }} {{ elu.prenom }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ elu.nom }} {{ elu.prenom }}</h5>
+                    <p class="card-text">
+                        <ul>
+                            {% for fonction in elu.fonctions %}
+                                {% if loop.first %}
+                                    <b><li>{{fonction.nom}}</li></b>
+                                {% else %}
+                                    <li>{{fonction.nom}}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </p>                
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

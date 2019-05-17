@@ -1,0 +1,35 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ personnelFonctions | length }} fonctions :</p>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fonction</th>
+            <th scope="col">Structure</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fonction in personnelFonctions %}
+                <tr> 
+                    <th scope="row">{{ fonction.id }}</th>
+                    <td>
+                        <a href="{{ path('admin_personnel_fonction_edit', { 'id': fonction.id }) }}">
+                            {{ fonction.nom }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ fonction.structure }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

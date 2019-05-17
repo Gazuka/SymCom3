@@ -1,0 +1,31 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ personnels | length }} personnes :</p>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for personnel in personnels %}
+                <tr> 
+                    <th scope="row">{{ personnel.id }}</th>
+                    <td>
+                        <a href="{{ path('admin_personnel_personnel_edit', { 'id': personnel.id }) }}">
+                            {{ personnel.nom }} {{ personnel.prenom }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
