@@ -84,7 +84,7 @@ class OutilsController extends AbstractController
             $manager->flush();
             $this->addFlash(
                 'success',
-                "L'élément' <strong>{$element->getNom()}</strong> a bien été enregistrée !"
+                "L'élément' a bien été enregistrée !"
             );
         }
         return $this->render($pagederesultat, [

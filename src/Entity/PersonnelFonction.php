@@ -29,13 +29,18 @@ class PersonnelFonction
     private $structure;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="fonctions")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $personnels;
+    private $position;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="foncts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $personnel;
 
     public function __construct()
     {
-        $this->personnels = new ArrayCollection();
     }
 
     public function __tostring()
@@ -72,28 +77,26 @@ class PersonnelFonction
         return $this;
     }
 
-    /**
-     * @return Collection|Personnel[]
-     */
-    public function getPersonnels(): Collection
+    public function getPosition(): ?int
     {
-        return $this->personnels;
+        return $this->position;
     }
 
-    public function addPersonnel(Personnel $personnel): self
+    public function setPosition(?int $position): self
     {
-        if (!$this->personnels->contains($personnel)) {
-            $this->personnels[] = $personnel;
-        }
+        $this->position = $position;
 
         return $this;
     }
 
-    public function removePersonnel(Personnel $personnel): self
+    public function getPersonnel(): ?Personnel
     {
-        if ($this->personnels->contains($personnel)) {
-            $this->personnels->removeElement($personnel);
-        }
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): self
+    {
+        $this->personnel = $personnel;
 
         return $this;
     }

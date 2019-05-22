@@ -54,7 +54,9 @@ class MairieController extends AbstractController
     {
         $this->StructureRender(); 
         $repo = $this->getDoctrine()->getRepository(Personnel::class);
-        $elus = $repo->findAll(); 
+        
+        $elus = $repo->findByElus('Conseil Municipal');
+
         $this->structure['elus'] = $elus;
         return $this->render('mairie/municipalite.html.twig', $this->structure);
     }

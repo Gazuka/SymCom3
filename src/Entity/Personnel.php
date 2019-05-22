@@ -39,9 +39,14 @@ class Personnel
     private $mails;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\PersonnelFonction", mappedBy="personnels")
+     * @ORM\OneToMany(targetEntity="App\Entity\PersonnelFonction", mappedBy="personnel")
      */
     private $fonctions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
 
     public function __construct()
     {
@@ -152,7 +157,7 @@ class Personnel
     {
         if (!$this->fonctions->contains($fonction)) {
             $this->fonctions[] = $fonction;
-            $fonction->addPersonnel($this);
+            $fonction->setPersonnel($this);
         }
 
         return $this;
@@ -162,8 +167,23 @@ class Personnel
     {
         if ($this->fonctions->contains($fonction)) {
             $this->fonctions->removeElement($fonction);
-            $fonction->removePersonnel($this);
+            // set the owning side to null (unless already changed)
+            if ($fonction->getPersonnel() === $this) {
+                $fonction->setPersonnel(null);
+            }
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

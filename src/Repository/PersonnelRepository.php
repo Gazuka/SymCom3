@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Personnel;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\PersonnelFonction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Personnel|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,33 @@ class PersonnelRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /*
+    return $this->getEntityManager()
+        ->createQueryBuilder()
+        ->select('u, r')
+        ->from('CRMCoreBundle:User', 'u')
+        ->innerJoin('u.profiles','p')
+        ->innerJoin('p.routegroups','rg')
+        ->innerJoin('rg.routes','r')
+        ->where('u.id = :user_id')->setParameter('user_id', $user->getId())
+        ->getQuery()
+        ->getResult();
+        
+        SELECT e, f
+FROM sigaFactureBundle:ElementFacture e
+JOIN e.Facture f
+
+*/
+
+    public function findByElus($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftjoin('p.fonctions', 'f')
+            ->andWhere('f.structure = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

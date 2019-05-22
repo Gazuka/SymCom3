@@ -3,10 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Personnel;
-use App\Entity\PersonnelFonction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PersonnelType extends AbstractType
@@ -18,11 +16,8 @@ class PersonnelType extends AbstractType
             ->add('prenom')
             ->add('telephones')
             ->add('mails')
-            ->add('fonctions', EntityType::class, [
-                'class' => PersonnelFonction::class,
-                'multiple' => true,
-                'expanded' => true,
-            ])
+            ->add('fonctions')
+            ->add('photo')
         ;
     }
 
