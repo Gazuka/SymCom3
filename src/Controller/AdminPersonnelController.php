@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminPersonnelController extends OutilsController
 {
     /**
-     * @Route("/personnel", name="personnel")
+     * @Route("/admin/personnel", name="admin_personnel")
      */
     public function index()
     {

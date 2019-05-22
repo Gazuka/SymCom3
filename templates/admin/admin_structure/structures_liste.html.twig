@@ -1,0 +1,31 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ structures | length }} structures :</p>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for structure in structures %}
+                <tr> 
+                    <th scope="row">{{ structure.id }}</th>
+                    <td>
+                        <a href="{{ path('admin_structure_structure_edit', { 'id': structure.id }) }}">
+                            {{ structure.nom }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

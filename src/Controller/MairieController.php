@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Menu;
 use App\Entity\Agenda;
 use App\Entity\Personnel;
+use App\Entity\Structure;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -59,5 +60,19 @@ class MairieController extends AbstractController
 
         $this->structure['elus'] = $elus;
         return $this->render('mairie/municipalite.html.twig', $this->structure);
+    }
+
+    /**
+     * @Route("/structure/{id}", name="mairie_structure")
+     */
+    public function structure($id)
+    {
+        $this->StructureRender(); 
+        $repo = $this->getDoctrine()->getRepository(Structure::class);
+        
+        $structure = $repo->find($id);
+
+        $this->structure['structure'] = $structure;
+        return $this->render('mairie/structure.html.twig', $this->structure);
     }
 }

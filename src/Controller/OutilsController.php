@@ -36,7 +36,7 @@ class OutilsController extends AbstractController
             $manager->flush();
             $this->addFlash(
                 'success',
-                "L'élément : <strong>{$element->getNom()}</strong> a bien été créé !"
+                "L'élément : a bien été créé !"
             );
             //Affichage de la liste des elements apres l'ajout du nouveau
             return $this->redirectToRoute($pagederesultat);

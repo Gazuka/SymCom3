@@ -1,0 +1,95 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ville de Guesnain - Les structures municipales{% endblock %}
+
+{% block body %}
+    {{structure.nom}}
+
+    <!-- INTRO -->
+<div class="card mb-3">
+	<div class="row no-gutters">
+		<div class="col-md-4">
+			<img src="\img\content\structures\{{structure.photo}}" class="card-img" alt="Médiathèque" />
+		</div>
+		<div class="col-md-8">
+			<div class="card-body">
+				<h5 class="card-title">{{structure.nom}}</h5>
+				<p class="card-text">{{structure.adresse}}<br /><br />{{structure.telephone}}<br />{{structure.mail}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- HORAIRES-->
+<div class="card-deck">
+		<div class="card">
+			<h5 class="card-header">Présentation</h5>
+			<div class="card-body">
+                <p class"card-text">{{structure.presentation}}</p>
+				<p class="card-text">La Médiathèque vous permet de consulter ou d'emprunter plus de 13000 <b>livres</b>, 20 abonnements de <b>magazines</b>, 1100 <b>CD</b> et 400 <b>DVD</b>.</p>
+				<p class="card-text">Audrey, Emeline, Laurence et Jérôme vous proposent de nombreux ateliers : club de lecture, ateliers informatiques, activités manuelles, lecture à voix haute, jeux de société...</p>
+			</div>
+		</div>
+	
+		<div class="card">
+			<h5 class="card-header">Horaires d'ouverture</h5>
+			<div class="card-body">
+				<p class="card-text">Mardi : 9h-12h / 13h30-18h<br />Mercredi : 9H-12h / 14h-18h<br />Jeudi : 9h-12h / 14h-17h<br />Vendredi : 9H-12h / 14h-18h<br />Samedi : 9h-12h / 14h-17h</p>
+			</div>
+		</div>
+	</div>
+</div>	
+	
+<br/>	
+<!-- PLAQUETTES -->
+<div class="row">
+	<div class="col-sm-6">
+		<div class="card" style="width: 100%;"><img src="images/ArticlesFixes/LesStructures/mediatheque/plaquettes/a-m-j-2019.jpg" class="card-img-top" alt="Programme avril à juin 2019" />
+			<div class="card-body">
+				<h5 class="card-title">Avril - Juin 2019</h5>
+				<p class="card-text">Programme des activités de la période avril, mai et juin 2019.</p>
+				<a href="images/pdf/mediatheque/programmes/Plaquette - Avril à juin - 2019.pdf" class="btn btn-primary" target="_blanck">Voir le programme</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card" style="width: 100%;"><img src="images/ArticlesFixes/LesStructures/mediatheque/bientot.jpg" class="card-img-top" alt="Programme juillet et août 2019" />
+			<div class="card-body">
+				<h5 class="card-title">Juillet - Août 2019</h5>
+				<p class="card-text">Le programme des grandes vacances sera bientôt disponible !</p>
+				<a href="#" class="btn btn-primary" target="_blanck">Voir le programme</a>
+			</div>
+		</div>
+	</div>
+</div>	
+
+<!-- JUMBOTRON TARIFS -->
+<br/>
+<div class="jumbotron">
+	<h1 class="display-4">Tarifs</h1>
+	<p class="lead">L'abonnement annuel vous permet d'emprunter des livres, magazines, CD et DVD mais également de participer aux ateliers et animations.</p>
+	<hr class="my-4" />
+	<p>Vous pouvez emprunter à la fois : 5 livres ou magazines, 4 CD et 2 DVD pour une durée de 3 semaines.</p>
+	<p>Les postes informatiques, durant les créneaux d'accès libre, vous permettent d'utiliser les outils de bureautique et d'avoir un accès à Internet. Réservation directement à l'accueil de la Médiathèque. (Même si des ordinateurs sont disponibles, l'accès vous sera refusé durant les ateliers scolaires)</p>
+	<p>Un supplément vous sera demandé pour la participation aux formations informatiques.</p>
+</div>
+
+<!-- CARD DECK des Tarifs -->
+<div class="card-deck">
+	<!-- -tarif 1 -->
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Gratuit</h5>
+			<p class="card-text">L'abonnement à la Médiathèque est gratuit pour les enfants scolarisés à Guesnain ainsi que pour les Guesninois :</p>
+			<ul>
+				<li>De moins de 18 ans</li>
+				<li>Etudiants</li>
+				<li>Allocataires du R.S.A.</li>
+				<li>Travailleurs handicapés</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

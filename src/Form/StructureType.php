@@ -2,28 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\MenuLien;
+use App\Entity\Structure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MenuLienType extends AbstractType
+class StructureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre')
-            ->add('url')
-            ->add('urlParam')
-            ->add('ordre')
-            ->add('categ')
+            ->add('nom')
+            ->add('adresse')
+            ->add('telephone')
+            ->add('mail')
+            ->add('photo')
+            ->add('presentation')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MenuLien::class,
+            'data_class' => Structure::class,
         ]);
     }
 }

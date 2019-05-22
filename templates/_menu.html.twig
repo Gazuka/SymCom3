@@ -5,7 +5,11 @@
       <div class="dropdown-menu">
         {% for lien in categ.liens %}
           {% if lien.url != '#' %}
-            <a class="dropdown-item" href="{{ path(lien.url) }}">{{ lien.titre }}</a>
+            {% if lien.urlparam == null %}
+              <a class="dropdown-item" href="{{ path(lien.url) }}">{{ lien.titre }}</a>
+            {% else %}
+              <a class="dropdown-item" href="{{ path(lien.url, {'id' : lien.urlparam}) }}">{{ lien.titre }}</a>
+            {% endif %}
           {% else %}
             <div class="dropdown-divider"></div>
           {% endif %}

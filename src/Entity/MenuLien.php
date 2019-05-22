@@ -37,6 +37,11 @@ class MenuLien
      */
     private $categ;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $urlParam;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class MenuLien
     public function setCateg(?MenuCateg $categ): self
     {
         $this->categ = $categ;
+
+        return $this;
+    }
+
+    public function getUrlParam(): ?string
+    {
+        return $this->urlParam;
+    }
+
+    public function setUrlParam(?string $urlParam): self
+    {
+        $this->urlParam = $urlParam;
 
         return $this;
     }
