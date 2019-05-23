@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Horaire;
 use App\Entity\Structure;
+use App\Form\HoraireType;
 use App\Form\StructureType;
+use App\Entity\HoraireOuverture;
+use App\Form\HoraireOuvertureType;
 use App\Controller\OutilsController;
+use App\Repository\HoraireRepository;
 use App\Repository\StructureRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,7 +40,7 @@ class AdminStructureController extends OutilsController
     public function creerStructure(Request $request, ObjectManager $manager):Response {
         $element = new Structure();
         $class = StructureType::class;
-        $pagedebase = 'admin/element_new.html.twig';
+        $pagedebase = 'admin/admin_structure/structure_new.html.twig';
         $pagederesultat = 'admin_structure_structures_liste';
         $titre = "Création d'une structure";  
         //$dependances = array('Events' => 'Agenda');      
@@ -64,7 +69,81 @@ class AdminStructureController extends OutilsController
     public function editStructure(Structure $structure, Request $request, ObjectManager $manager):Response {
         $element = $structure;
         $classType = StructureType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
+        $pagederesultat = "admin/admin_structure/structure_edit.html.twig";
+        //$dependances = array('Events' => 'Agenda');
+        $dependances = null;
+        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+    }
+
+    /** GESTION DES HORAIRES *******************************************************************************************************************************************/
+    /**
+     * Création d'un horaire
+     * 
+     * @Route("/admin/horaire/new/{structure_id}", name="admin_structure_horaire_new")
+     *
+     * @return Response
+     */
+    public function creerHoraire(Request $request, ObjectManager $manager, StructureRepository $repo, $structure_id):Response {
+        $element = new Horaire();
+        $structure = $repo->find($structure_id);
+        $element->setStructure($structure);        
+        $class = HoraireType::class;
+        $pagedebase = 'admin/element_new.html.twig';
+        //$pagederesultat = 'admin_structure_horaires_liste';
+        $pagederesultat = array('page' => 'admin_structure_structure_edit', 'id' => $structure_id);
+        $titre = "Création d'un horaire";  
+        //$dependances = array('Events' => 'Agenda');      
+        $dependances = null;      
+        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+    }    
+    
+    /**
+     * Permet d'afficher le formulaire d'édition d'un horaire
+     *
+     * @Route("/admin/admin_structure/horaire/{id}/edit", name="admin_structure_horaire_edit")
+     * @return Response
+     */
+    public function editHoraire(Horaire $horaire, Request $request, ObjectManager $manager):Response {
+        $element = $horaire;
+        $classType = HoraireType::class;
+        $pagederesultat = "admin/admin_structure/horaire_edit.html.twig";
+        //$dependances = array('Events' => 'Agenda');
+        $dependances = null;
+        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+    }
+
+    /** GESTION DES OUVERTURES *****************************************************************************************************************************************/
+    /**
+     * Création d'une ouverture
+     * 
+     * @Route("/admin/ouverture/new/{horaire_id}", name="admin_structure_ouverture_new")
+     *
+     * @return Response
+     */
+    public function creerHoraireOuverture(Request $request, ObjectManager $manager, HoraireRepository $repo, $horaire_id):Response {
+        $element = new HoraireOuverture();
+        $horaire = $repo->find($horaire_id);
+        $element->setHoraire($horaire);        
+        $class = HoraireOuvertureType::class;
+        $pagedebase = 'admin/element_new.html.twig';
+        //$pagederesultat = 'admin_structure_horaires_liste';
+        $pagederesultat = array('page' => 'admin_structure_horaire_edit', 'id' => $horaire_id);
+        $titre = "Création d'une ouverture";  
+        //$dependances = array('Events' => 'Agenda');      
+        $dependances = null;      
+        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+    }    
+    
+    /**
+     * Permet d'afficher le formulaire d'édition d'une ouverture
+     *
+     * @Route("/admin/admin_structure/ouverture/{id}/edit", name="admin_structure_ouverture_edit")
+     * @return Response
+     */
+    public function editHoraireOuverture(HoraireOuverture $horaireOuverture, Request $request, ObjectManager $manager):Response {
+        $element = $horaireOuverture;
+        $classType = HoraireOuvertureType::class;
+        $pagederesultat = "admin/admin_structure/ouverture_edit.html.twig";
         //$dependances = array('Events' => 'Agenda');
         $dependances = null;
         return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);

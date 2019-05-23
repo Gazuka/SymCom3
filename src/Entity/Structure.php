@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,21 @@ class Structure
      * @ORM\Column(type="text", nullable=true)
      */
     private $presentation;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Horaire", mappedBy="structure")
+     */
+    private $horaires;
+
+    public function __construct()
+    {
+        $this->horaires = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +136,37 @@ class Structure
     public function setPresentation(?string $presentation): self
     {
         $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Horaire[]
+     */
+    public function getHoraires(): Collection
+    {
+        return $this->horaires;
+    }
+
+    public function addHoraire(Horaire $horaire): self
+    {
+        if (!$this->horaires->contains($horaire)) {
+            $this->horaires[] = $horaire;
+            $horaire->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHoraire(Horaire $horaire): self
+    {
+        if ($this->horaires->contains($horaire)) {
+            $this->horaires->removeElement($horaire);
+            // set the owning side to null (unless already changed)
+            if ($horaire->getStructure() === $this) {
+                $horaire->setStructure(null);
+            }
+        }
 
         return $this;
     }

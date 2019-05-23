@@ -38,8 +38,18 @@ class OutilsController extends AbstractController
                 'success',
                 "L'élément : a bien été créé !"
             );
-            //Affichage de la liste des elements apres l'ajout du nouveau
-            return $this->redirectToRoute($pagederesultat);
+            
+            if(is_array($pagederesultat))
+            {
+                //Affichage de la liste des elements avec l'id
+                return $this->redirectToRoute($pagederesultat['page'], $pagederesultat);
+            }
+            else
+            {
+                //Affichage de la liste des elements apres l'ajout du nouveau
+                return $this->redirectToRoute($pagederesultat);
+            }
+            
         }
         //Affichage de la page avec le formulaire
         return $this->render($pagedebase, [

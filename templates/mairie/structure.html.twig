@@ -3,13 +3,11 @@
 {% block title %}Ville de Guesnain - Les structures municipales{% endblock %}
 
 {% block body %}
-    {{structure.nom}}
-
     <!-- INTRO -->
 <div class="card mb-3">
 	<div class="row no-gutters">
 		<div class="col-md-4">
-			<img src="\img\content\structures\{{structure.photo}}" class="card-img" alt="Médiathèque" />
+			<img src="\img\content\structures\{{structure.photo}}" class="card-img" alt="{{structure.nom}}" />
 		</div>
 		<div class="col-md-8">
 			<div class="card-body">
@@ -20,14 +18,14 @@
 	</div>
 </div>
 
+
+
 <!-- HORAIRES-->
-<div class="card-deck">
+	<div class="card-deck">
 		<div class="card">
 			<h5 class="card-header">Présentation</h5>
 			<div class="card-body">
-                <p class"card-text">{{structure.presentation}}</p>
-				<p class="card-text">La Médiathèque vous permet de consulter ou d'emprunter plus de 13000 <b>livres</b>, 20 abonnements de <b>magazines</b>, 1100 <b>CD</b> et 400 <b>DVD</b>.</p>
-				<p class="card-text">Audrey, Emeline, Laurence et Jérôme vous proposent de nombreux ateliers : club de lecture, ateliers informatiques, activités manuelles, lecture à voix haute, jeux de société...</p>
+                <p class"card-text">{{structure.presentation | raw}}</p>
 			</div>
 		</div>
 	
@@ -38,7 +36,7 @@
 			</div>
 		</div>
 	</div>
-</div>	
+
 	
 <br/>	
 <!-- PLAQUETTES -->
@@ -61,7 +59,7 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 
 <!-- JUMBOTRON TARIFS -->
 <br/>

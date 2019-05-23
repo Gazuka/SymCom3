@@ -1,0 +1,68 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}Modification de : {{ element.nom }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/ckfinder/ckfinder.js"></script>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        var editor = CKEDITOR.replace( 'structure_presentation' );
+        CKFinder.setupCKEditor( editor );
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron m-5">
+        
+        <h1>Modification de : {{ element.nom }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
+        {{ form_end(form) }}  
+
+        <div class="col-md-2">
+			<img src="\img\content\structures\{{element.photo}}" class="card-img" alt="{{element.nom}}" />
+		</div>
+    </div>
+
+    <div class="jumbotron m-5 bg-info">
+        {# Affichage des horaires #}      
+
+        <ul class="nav justify-content-center bg-warning m-5">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('admin_structure_horaire_new', {'structure_id' : element.id } ) }}">Ajouter un horaire</a>
+            </li>
+        </ul>
+
+        <p>Vous avez {{ element.horaires | length }} horaires :</p>
+
+        <table class="table bg-light">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for horaire in element.horaires %}
+                    <tr> 
+                        <th scope="row">{{ horaire.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_structure_horaire_edit', { 'id': horaire.id }) }}">
+                                {{ horaire.nom }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

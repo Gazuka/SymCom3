@@ -6,26 +6,34 @@
 
 {% block body %}
 
-    <p>Vous avez {{ structures | length }} structures :</p>
+    <ul class="nav justify-content-center bg-warning m-5">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('admin_structure_structure_new') }}">Ajouter une structure</a>
+        </li>
+    </ul>    
 
-    <table class="table">
-        <thead class="thead-light">
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nom</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for structure in structures %}
-                <tr> 
-                    <th scope="row">{{ structure.id }}</th>
-                    <td>
-                        <a href="{{ path('admin_structure_structure_edit', { 'id': structure.id }) }}">
-                            {{ structure.nom }}
-                        </a>
-                    </td>
+    <div class="jumbotron m-5">
+        <p>Vous avez {{ structures | length }} structures :</p>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for structure in structures %}
+                    <tr> 
+                        <th scope="row">{{ structure.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_structure_structure_edit', { 'id': structure.id }) }}">
+                                {{ structure.nom }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}Modification de : {{ element.nom }}{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron m-5">
+        <h1>Modification de : {{ element.nom }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
+        {{ form_end(form) }}        
+    </div>
+
+    <div class="jumbotron m-5 bg-info">
+        {# Affichage des horaires #}   
+        <ul class="nav justify-content-center bg-warning m-5">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('admin_structure_ouverture_new', {'horaire_id' : element.id } ) }}">Ajouter une ouverture</a>
+            </li>
+        </ul>
+
+        <p>Vous avez {{ element.ouvertures | length }} ouvertures :</p>
+
+        <table class="table bg-light">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Jour</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ouverture in element.ouvertures %}
+                    <tr> 
+                        <th scope="row">{{ ouverture.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_structure_horaire_edit', { 'id': ouverture.id }) }}">
+                                {{ ouverture.jour }} {{ ouverture.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm")}} - {{ ouverture.heureFin  | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

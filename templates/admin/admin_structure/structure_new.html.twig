@@ -1,0 +1,30 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/ckfinder/ckfinder.js"></script>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        var editor = CKEDITOR.replace( 'structure_presentation' );
+        CKFinder.setupCKEditor( editor );
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>{{ titre }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+        {{ form_end(form) }}        
+    </div>
+
+{% endblock %}
