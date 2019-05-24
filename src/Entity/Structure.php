@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StructureRepository")
@@ -169,5 +170,21 @@ class Structure
         }
 
         return $this;
+    }
+
+    public function horaireActif(): Horaire
+    {
+        $dateActuelle = new DateTime();
+        $horairesPossibles = array();
+
+        foreach($this->horaires as $horaire)
+        {
+            $retour = $horaire->verifHoraireActif($dateActuelle);
+            if($retour != null)
+            {
+                $horairesPossibles = array($retour => $horaire);
+            }            
+        }    
+        return min($horairesPossibles);
     }
 }

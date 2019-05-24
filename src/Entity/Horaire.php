@@ -131,4 +131,25 @@ class Horaire
 
         return $this;
     }
+
+    /**
+     * Retourne false si l'horaire n'est pas actif, et le nombre de jour d'acitivité si l'horaire est actif
+     */
+    public function verifHoraireActif($dateVerif)
+    {
+        //if($this->dateDebut <= $dateVerif && $this->dateFin >= $dateVerif)
+        $test1 = date_diff($this->dateDebut, $dateVerif)->format('%R%a');
+        $test2 = date_diff($dateVerif, $this->dateFin)->format('%R%a');
+        if( $test1 >= 0 &&  $test2 >= 0)
+        {
+            //Date active
+            return date_diff($this->dateDebut, $this->dateFin)->format('%a');;
+        }
+        else
+        {
+            //Date hors de l'horaire            
+            return false;
+        }
+    }
 }
+
