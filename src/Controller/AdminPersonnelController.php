@@ -36,14 +36,18 @@ class AdminPersonnelController extends OutilsController
      * @return Response
      */
     public function creerPersonnel(Request $request, ObjectManager $manager):Response {
-        $element = new Personnel();
-        $class = PersonnelType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_personnel_personnels_liste';
-        $titre = "Création d'une personne";  
-        //$dependances = array('Events' => 'Agenda');      
-        $dependances = null;      
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = new Personnel();
+        $variables['classType'] = PersonnelType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_personnel_personnels_liste';
+        $variables['titre'] = "Création d'une personne";
+        $variables['texteConfirmation'] = "Le membre du personnel ### ZZZ a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $variables['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
+        
+        return $this->formElement($variables);
     }    
     /**
      * Affiche l'ensemble du personnels
@@ -58,6 +62,7 @@ class AdminPersonnelController extends OutilsController
         $pagederesultat = "admin/admin_personnel/personnels_liste.html.twig";
         return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
     }
+
     /**
      * Permet d'afficher le formulaire d'édition d'un agenda
      *
@@ -65,12 +70,18 @@ class AdminPersonnelController extends OutilsController
      * @return Response
      */
     public function editPersonnel(Personnel $personnel, Request $request, ObjectManager $manager):Response {
-        $element = $personnel;
-        $classType = PersonnelType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
-        //$dependances = array('Events' => 'Agenda');
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $personnel;
+        $variables['classType'] = PersonnelType::class;
+        $variables['pagedebase'] = 'admin/element_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_personnel_personnels_liste';
+        $variables['titre'] = "Edition de ".$personnel->getNom()." ".$personnel->getPrenom().".";
+        $variables['texteConfirmation'] = "La fiche de ### ZZZ a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $variables['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
+        
+        return $this->formElement($variables);
     }
 
     /** GESTION DES FONCTIONS **********************************************************************************************************************************************************/
@@ -82,15 +93,19 @@ class AdminPersonnelController extends OutilsController
      * @return Response
      */
     public function creerPersonnelFonction(Request $request, ObjectManager $manager):Response {
-        $element = new PersonnelFonction();
-        $class = PersonnelFonctionType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_personnel_fonctions_liste';
-        $titre = "Création d'une fonction";  
-        //$dependances = array('Events' => 'Agenda');      
-        $dependances = null;      
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = new PersonnelFonction();
+        $variables['classType'] = PersonnelFonctionType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_personnel_fonctions_liste';
+        $variables['titre'] = "Création d'une fonction";
+        $variables['texteConfirmation'] = "La fonction ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }    
+
     /**
      * Affiche l'ensemble des fonctions
      * 
@@ -104,6 +119,7 @@ class AdminPersonnelController extends OutilsController
         $pagederesultat = "admin/admin_personnel/fonctions_liste.html.twig";
         return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
     }
+
     /**
      * Permet d'afficher le formulaire d'édition d'une fonction
      *
@@ -111,11 +127,16 @@ class AdminPersonnelController extends OutilsController
      * @return Response
      */
     public function editPersonnelFonction(PersonnelFonction $personnelFonction, Request $request, ObjectManager $manager):Response {
-        $element = $personnelFonction;
-        $classType = PersonnelFonctionType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
-        //$dependances = array('Events' => 'Agenda');
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $personnelFonction;
+        $variables['classType'] = PersonnelFonctionType::class;
+        $variables['pagedebase'] = 'admin/element_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_personnel_fonctions_liste';
+        $variables['titre'] = "Edition de la fonction ".$personnelFonction->getNom().".";
+        $variables['texteConfirmation'] = "La fonction ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }
 }

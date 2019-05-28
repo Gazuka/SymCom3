@@ -37,13 +37,17 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function creerMenu(Request $request, ObjectManager $manager):Response {
-        $element = new Menu();
-        $class = MenuType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_menu_menus_liste';
-        $titre = "Création d'un menu";      
-        $dependances = null;
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = new Menu();
+        $variables['classType'] = MenuType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_menu_menus_liste';
+        $variables['titre'] = "Création d'un menu";
+        $variables['texteConfirmation'] = "Le menu ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        
+        return $this->formElement($variables);
     } 
 
     /**
@@ -67,11 +71,17 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function editMenu(Menu $menu, Request $request, ObjectManager $manager):Response {
-        $element = $menu;
-        $classType = MenuType::class;
-        $pagederesultat = "admin/admin_menu/menu_edit.html.twig";
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $menu;
+        $variables['classType'] = MenuType::class;
+        $variables['pagedebase'] = 'admin/admin_menu/menu_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_menu_menus_liste';
+        $variables['titre'] = "Edition du menu ".$menu->getTitre().".";
+        $variables['texteConfirmation'] = "Le menu ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        
+        return $this->formElement($variables);
     }
 
     /** GESTION DES CATEGORIES DE MENUS ************************************************************************************************************************************************/
@@ -83,15 +93,21 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function creerMenuCateg(Request $request, ObjectManager $manager, MenuRepository $repoMenu, $id):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
         $element = new MenuCateg();
         $menu = $repoMenu->find($id);
         $element->setMenu($menu);
-        $class = MenuCategType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_menu_menus_liste';
-        $titre = "Création d'une catégorie pour le menu";      
-        $dependances = array('Menu' => 'MenuCateg');
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['element'] = $element;
+        $variables['classType'] = MenuCategType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_menu_menus_liste';
+        $variables['titre'] = "Création d'une catégorie pour le menu";
+        $variables['dependances'] = array('Menu' => 'MenuCateg');
+        $variables['texteConfirmation'] = "La catégorie ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        
+        return $this->formElement($variables);
     }  
     
     /**
@@ -101,11 +117,17 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function editMenuCateg(MenuCateg $menuCateg, Request $request, ObjectManager $manager):Response {
-        $element = $menuCateg;
-        $classType = MenuCategType::class;
-        $pagederesultat = "admin/admin_menu/menucateg_edit.html.twig";
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $menuCateg;
+        $variables['classType'] = MenuCategType::class;
+        $variables['pagedebase'] = 'admin/admin_menu/menucateg_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_menu_menus_liste';
+        $variables['titre'] = "Edition de la catégorie ".$menu->getTitre().".";
+        $variables['texteConfirmation'] = "La catégorie ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        
+        return $this->formElement($variables);
     }
 
     /** GESTION DES LIENS **************************************************************************************************************************************************************/
@@ -117,15 +139,20 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function creerMenuLien(Request $request, ObjectManager $manager, MenuCategRepository $repoMenuCateg, $id):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
         $element = new MenuLien();
         $menuCateg = $repoMenuCateg->find($id);
         $element->setCateg($menuCateg);
-        $class = MenuLienType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_menu_menus_liste';
-        $titre = "Création d'un lien pour le menu";      
-        $dependances = array('Categ' => 'Lien');
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['element'] = $element;
+        $variables['classType'] = MenuLienType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_menu_menus_liste';
+        $variables['titre'] = "Création d'un lien pour le menu";
+        $variables['texteConfirmation'] = "Le lien ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        
+        return $this->formElement($variables);
     }  
     
     /**
@@ -135,10 +162,16 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function editMenuLien(MenuLien $menuLien, Request $request, ObjectManager $manager):Response {
-        $element = $menuLien;
-        $classType = MenuLienType::class;
-        $pagederesultat = "admin/admin_menu/menulien_edit.html.twig";
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $menuLien;
+        $variables['classType'] = MenuLienType::class;
+        $variables['pagedebase'] = 'admin/admin_menu/menulien_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_menu_menus_liste';
+        $variables['titre'] = "Edition du lien ".$menuLien->getTitre().".";
+        $variables['texteConfirmation'] = "Le lien ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        
+        return $this->formElement($variables);
     }
 }

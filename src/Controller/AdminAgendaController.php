@@ -35,13 +35,18 @@ class AdminAgendaController extends OutilsController
      * @return Response
      */
     public function creerAgenda(Request $request, ObjectManager $manager):Response {
-        $element = new Agenda();
-        $class = AgendaType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_agenda_agendas_liste';
-        $titre = "Création d'un agenda";  
-        $dependances = array('Events' => 'Agenda');      
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = new Agenda();
+        $variables['classType'] = AgendaType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_agenda_agendas_liste';
+        $variables['titre'] = "Création d'un agenda";
+        $dependances = array('Events' => 'Agenda');
+        $variables['texteConfirmation'] = "L'agenda ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }    
     /**
      * Affiche l'ensemble des agendas
@@ -63,11 +68,18 @@ class AdminAgendaController extends OutilsController
      * @return Response
      */
     public function editAgenda(Agenda $agenda, Request $request, ObjectManager $manager):Response {
-        $element = $agenda;
-        $classType = AgendaType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $agenda;
+        $variables['classType'] = AgendaType::class;
+        $variables['pagedebase'] = 'admin/element_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_agenda_agendas_liste';
+        $variables['titre'] = "Edition de l'agenda ".$agenda->getNom().".";
         $dependances = array('Events' => 'Agenda');
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['texteConfirmation'] = "L'agenda ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }
 
     /** GESTION DES EVENEMENTS D'AGENDAS ***********************************************************************************************************************************************/
@@ -79,13 +91,18 @@ class AdminAgendaController extends OutilsController
      * @return Response
      */
     public function creerAgendaEvent(Request $request, ObjectManager $manager):Response {
-        $element = new AgendaEvent();
-        $class = AgendaEventType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        $pagederesultat = 'admin_agenda_evenements_liste';
-        $titre = "Création d'un évenemeent d'agenda";
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = new AgendaEvent();
+        $variables['classType'] = AgendaEventType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_agenda_evenements_liste';
+        $variables['titre'] = "Création d'un événement";
         $dependances = array('Agendas' => 'Event');
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $variables['texteConfirmation'] = "L'événement ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }    
     /**
      * Affiche l'ensemble des évenements d'agendas
@@ -107,10 +124,17 @@ class AdminAgendaController extends OutilsController
      * @return Response
      */
     public function editAgendaevent(AgendaEvent $agendaevent, Request $request, ObjectManager $manager):Response {
-        $element = $agendaevent;
-        $classType = AgendaEventType::class;
-        $pagederesultat = "admin/element_edit.html.twig";
-        $dependances = array('Agendas' => 'Event');        
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $agendaevent;
+        $variables['classType'] = AgendaEventType::class;
+        $variables['pagedebase'] = 'admin/element_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_agenda_evenements_liste';
+        $variables['titre'] = "Edition de l'événement ".$agendaevent->getNom().".";
+        $dependances = array('Agendas' => 'Event'); 
+        $variables['texteConfirmation'] = "L'événement ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }
 }

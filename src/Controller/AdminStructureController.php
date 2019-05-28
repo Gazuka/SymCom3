@@ -38,15 +38,18 @@ class AdminStructureController extends OutilsController
      * @return Response
      */
     public function creerStructure(Request $request, ObjectManager $manager):Response {
-        $element = new Structure();
-        $class = StructureType::class;
-        $pagedebase = 'admin/admin_structure/structure_new.html.twig';
-        $pagederesultat = 'admin_structure_structures_liste';
-        $titre = "Création d'une structure";  
-        //$dependances = array('Events' => 'Agenda');      
-        $dependances = null;      
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
-    }    
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = new Structure();
+        $variables['classType'] = StructureType::class;
+        $variables['pagedebase'] = 'admin/admin_structure/structure_new.html.twig';
+        $variables['pagederesultat'] = 'admin_structure_structures_liste';
+        $variables['titre'] = "Création d'une structure";
+        $variables['texteConfirmation'] = "La structure ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
+    }
     /**
      * Affiche l'ensemble des structures
      * 
@@ -67,12 +70,17 @@ class AdminStructureController extends OutilsController
      * @return Response
      */
     public function editStructure(Structure $structure, Request $request, ObjectManager $manager):Response {
-        $element = $structure;
-        $classType = StructureType::class;
-        $pagederesultat = "admin/admin_structure/structure_edit.html.twig";
-        //$dependances = array('Events' => 'Agenda');
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $structure;
+        $variables['classType'] = StructureType::class;
+        $variables['pagedebase'] = 'admin/admin_structure/structure_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_structure_structures_liste';
+        $variables['titre'] = "Edition de la structure ".$structure->getNom().".";
+        $variables['texteConfirmation'] = "La structure ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }
 
     /** GESTION DES HORAIRES *******************************************************************************************************************************************/
@@ -84,17 +92,20 @@ class AdminStructureController extends OutilsController
      * @return Response
      */
     public function creerHoraire(Request $request, ObjectManager $manager, StructureRepository $repo, $structure_id):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
         $element = new Horaire();
         $structure = $repo->find($structure_id);
-        $element->setStructure($structure);        
-        $class = HoraireType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        //$pagederesultat = 'admin_structure_horaires_liste';
-        $pagederesultat = array('page' => 'admin_structure_structure_edit', 'id' => $structure_id);
-        $titre = "Création d'un horaire";  
-        //$dependances = array('Events' => 'Agenda');      
-        $dependances = null;      
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $element->setStructure($structure);
+        $variables['element'] = $element;
+        $variables['classType'] = HoraireType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = array('page' => 'admin_structure_structure_edit', 'id' => $structure_id);
+        $variables['titre'] = "Création d'un horaire";
+        $variables['texteConfirmation'] = "L'horaire ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }    
     
     /**
@@ -104,12 +115,17 @@ class AdminStructureController extends OutilsController
      * @return Response
      */
     public function editHoraire(Horaire $horaire, Request $request, ObjectManager $manager):Response {
-        $element = $horaire;
-        $classType = HoraireType::class;
-        $pagederesultat = "admin/admin_structure/horaire_edit.html.twig";
-        //$dependances = array('Events' => 'Agenda');
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $horaire;
+        $variables['classType'] = HoraireType::class;
+        $variables['pagedebase'] = 'admin/admin_structure/horaire_edit.html.twig';
+        $variables['pagederesultat'] = array('page' => 'admin_structure_structure_edit', 'id' => $horaire->getStructure()->getId());
+        $variables['titre'] = "Edition de l'horaire ".$horaire->getNom().".";
+        $variables['texteConfirmation'] = "L'horaire ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        
+        return $this->formElement($variables);
     }
 
     /** GESTION DES OUVERTURES *****************************************************************************************************************************************/
@@ -121,17 +137,20 @@ class AdminStructureController extends OutilsController
      * @return Response
      */
     public function creerHoraireOuverture(Request $request, ObjectManager $manager, HoraireRepository $repo, $horaire_id):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
         $element = new HoraireOuverture();
         $horaire = $repo->find($horaire_id);
-        $element->setHoraire($horaire);        
-        $class = HoraireOuvertureType::class;
-        $pagedebase = 'admin/element_new.html.twig';
-        //$pagederesultat = 'admin_structure_horaires_liste';
-        $pagederesultat = array('page' => 'admin_structure_horaire_edit', 'id' => $horaire_id);
-        $titre = "Création d'une ouverture";  
-        //$dependances = array('Events' => 'Agenda');      
-        $dependances = null;      
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre, $dependances);
+        $element->setHoraire($horaire);
+        $variables['element'] = $element;
+        $variables['classType'] = HoraireOuvertureType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = array('page' => 'admin_structure_horaire_edit', 'id' => $horaire_id);
+        $variables['titre'] = "Création d'une ouverture";
+        $variables['texteConfirmation'] = "L'ouverture ### a bien été créé !";
+        $variables['texteConfirmationEval']["###"] = '$element->getJour();';
+        
+        return $this->formElement($variables);
     }    
     
     /**
@@ -141,11 +160,16 @@ class AdminStructureController extends OutilsController
      * @return Response
      */
     public function editHoraireOuverture(HoraireOuverture $horaireOuverture, Request $request, ObjectManager $manager):Response {
-        $element = $horaireOuverture;
-        $classType = HoraireOuvertureType::class;
-        $pagederesultat = "admin/admin_structure/ouverture_edit.html.twig";
-        //$dependances = array('Events' => 'Agenda');
-        $dependances = null;
-        return $this->editElement($element, $classType, $pagederesultat, $request, $manager, $dependances);
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $horaireOuverture;
+        $variables['classType'] = HoraireOuvertureType::class;
+        $variables['pagedebase'] = 'admin/admin_structure/ouverture_edit.html.twig';
+        $variables['pagederesultat'] = array('page' => 'admin_structure_horaire_edit', 'id' => $horaireOuverture->getHoraire()->getId());
+        $variables['titre'] = "Edition de l'ouverture ".$horaireOuverture->getJour().".";
+        $variables['texteConfirmation'] = "L'ouverture du ### a bien été modifié !";
+        $variables['texteConfirmationEval']["###"] = '$element->getJour();';
+        
+        return $this->formElement($variables);
     }
 }
