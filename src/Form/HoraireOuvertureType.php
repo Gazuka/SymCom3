@@ -15,6 +15,8 @@ class HoraireOuvertureType extends AbstractType
             ->add('jour')
             ->add('heureDebut')
             ->add('heureFin')
+            ->add('heureDebut2')
+            ->add('heureFin2')
         ;
     }
 

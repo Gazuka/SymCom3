@@ -30,10 +30,26 @@
 		</div>
 	
 		<div class="card">
-			<h5 class="card-header">Horaires d'ouverture</h5>
+			<h5 class="card-header">Horaires d'ouverture <span class="text-success">- Ouvert</span></h5> <!--<span class="text-danger">- Fermée</span>-->
 			<div class="card-body">
 				<h6>{{structure.horaireActif.nom}}</h6>
-				<p class="card-text">Mardi : 9h-12h / 13h30-18h<br />Mercredi : 9H-12h / 14h-18h<br />Jeudi : 9h-12h / 14h-17h<br />Vendredi : 9H-12h / 14h-18h<br />Samedi : 9h-12h / 14h-17h</p>
+				<p class="card-text">
+					<div class="container">
+						{% for ouverture in structure.horaireActif.ouvertures %}
+							<div class="row mb-2">
+								<div class="col-6 text-right">
+									{{ ouverture.jour }} :
+								</div>
+								<div class="col-6">
+									{{ ouverture.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm") }} - {{ ouverture.heureFin | localizeddate('none', 'none', null, null, "k'h'mm") }}
+									{% if ouverture.heureDebut2 != null and ouverture.heureFin2 != null %}
+										<br/>{{ ouverture.heureDebut2 | localizeddate('none', 'none', null, null, "k'h'mm") }} - {{ ouverture.heureFin2 | localizeddate('none', 'none', null, null, "k'h'mm") }}
+									{% endif %}
+								</div>								
+							</div>
+						{% endfor %}
+					</div>
+				</p>
 			</div>
 		</div>
 	</div>

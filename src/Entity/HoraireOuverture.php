@@ -37,6 +37,16 @@ class HoraireOuverture
      */
     private $horaire;
 
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heureDebut2;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heureFin2;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +96,30 @@ class HoraireOuverture
     public function setHoraire(?Horaire $horaire): self
     {
         $this->horaire = $horaire;
+
+        return $this;
+    }
+
+    public function getHeureDebut2(): ?\DateTimeInterface
+    {
+        return $this->heureDebut2;
+    }
+
+    public function setHeureDebut2(?\DateTimeInterface $heureDebut2): self
+    {
+        $this->heureDebut2 = $heureDebut2;
+
+        return $this;
+    }
+
+    public function getHeureFin2(): ?\DateTimeInterface
+    {
+        return $this->heureFin2;
+    }
+
+    public function setHeureFin2(?\DateTimeInterface $heureFin2): self
+    {
+        $this->heureFin2 = $heureFin2;
 
         return $this;
     }

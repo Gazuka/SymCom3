@@ -41,11 +41,11 @@ class Horaire
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\HoraireOuverture", mappedBy="horaire", orphanRemoval=true)
      */
-    private $Ouvertures;
+    private $ouvertures;
 
     public function __construct()
     {
-        $this->Ouvertures = new ArrayCollection();
+        $this->ouvertures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,13 +106,13 @@ class Horaire
      */
     public function getOuvertures(): Collection
     {
-        return $this->Ouvertures;
+        return $this->ouvertures;
     }
 
     public function addOuverture(HoraireOuverture $ouverture): self
     {
-        if (!$this->Ouvertures->contains($ouverture)) {
-            $this->Ouvertures[] = $ouverture;
+        if (!$this->ouvertures->contains($ouverture)) {
+            $this->ouvertures[] = $ouverture;
             $ouverture->setHoraire($this);
         }
 
@@ -121,8 +121,8 @@ class Horaire
 
     public function removeOuverture(HoraireOuverture $ouverture): self
     {
-        if ($this->Ouvertures->contains($ouverture)) {
-            $this->Ouvertures->removeElement($ouverture);
+        if ($this->ouvertures->contains($ouverture)) {
+            $this->ouvertures->removeElement($ouverture);
             // set the owning side to null (unless already changed)
             if ($ouverture->getHoraire() === $this) {
                 $ouverture->setHoraire(null);

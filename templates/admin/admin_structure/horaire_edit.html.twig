@@ -38,8 +38,11 @@
                     <tr> 
                         <th scope="row">{{ ouverture.id }}</th>
                         <td>
-                            <a href="{{ path('admin_structure_horaire_edit', { 'id': ouverture.id }) }}">
-                                {{ ouverture.jour }} {{ ouverture.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm")}} - {{ ouverture.heureFin  | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                            <a href="{{ path('admin_structure_ouverture_edit', { 'id': ouverture.id }) }}">
+                                {{ ouverture.jour }} : {{ ouverture.heureDebut | localizeddate('none', 'none', null, null, "k'h'mm")}} - {{ ouverture.heureFin  | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                                {% if ouverture.heureDebut2 != null and ouverture.heureFin2 != null %}
+                                 / {{ ouverture.heureDebut2 | localizeddate('none', 'none', null, null, "k'h'mm")}} - {{ ouverture.heureFin2  | localizeddate('none', 'none', null, null, "k'h'mm")}}
+                                {% endif %}
                             </a>
                         </td>
                     </tr>

@@ -100,7 +100,8 @@ class AdminStructureController extends OutilsController
         $variables['element'] = $element;
         $variables['classType'] = HoraireType::class;
         $variables['pagedebase'] = 'admin/element_new.html.twig';
-        $variables['pagederesultat'] = array('page' => 'admin_structure_structure_edit', 'id' => $structure_id);
+        $variables['pagederesultat'] = 'admin_structure_structure_edit';
+        $variables['pagederesultatConfig'] = array('id' => $structure_id);
         $variables['titre'] = "Création d'un horaire";
         $variables['texteConfirmation'] = "L'horaire ### a bien été créé !";
         $variables['texteConfirmationEval']["###"] = '$element->getNom();';
@@ -120,7 +121,8 @@ class AdminStructureController extends OutilsController
         $variables['element'] = $horaire;
         $variables['classType'] = HoraireType::class;
         $variables['pagedebase'] = 'admin/admin_structure/horaire_edit.html.twig';
-        $variables['pagederesultat'] = array('page' => 'admin_structure_structure_edit', 'id' => $horaire->getStructure()->getId());
+        $variables['pagederesultat'] = 'admin_structure_structure_edit';
+        $variables['pagederesultatConfig'] = array('id' => $horaire->getStructure()->getId());
         $variables['titre'] = "Edition de l'horaire ".$horaire->getNom().".";
         $variables['texteConfirmation'] = "L'horaire ### a bien été modifié !";
         $variables['texteConfirmationEval']["###"] = '$element->getNom();';
@@ -145,7 +147,8 @@ class AdminStructureController extends OutilsController
         $variables['element'] = $element;
         $variables['classType'] = HoraireOuvertureType::class;
         $variables['pagedebase'] = 'admin/element_new.html.twig';
-        $variables['pagederesultat'] = array('page' => 'admin_structure_horaire_edit', 'id' => $horaire_id);
+        $variables['pagederesultat'] = 'admin_structure_horaire_edit';
+        $variables['pagederesultatConfig'] = array('id' => $horaire_id);
         $variables['titre'] = "Création d'une ouverture";
         $variables['texteConfirmation'] = "L'ouverture ### a bien été créé !";
         $variables['texteConfirmationEval']["###"] = '$element->getJour();';
@@ -165,7 +168,8 @@ class AdminStructureController extends OutilsController
         $variables['element'] = $horaireOuverture;
         $variables['classType'] = HoraireOuvertureType::class;
         $variables['pagedebase'] = 'admin/admin_structure/ouverture_edit.html.twig';
-        $variables['pagederesultat'] = array('page' => 'admin_structure_horaire_edit', 'id' => $horaireOuverture->getHoraire()->getId());
+        $variables['pagederesultat'] = 'admin_structure_horaire_edit';
+        $variables['pagederesultatConfig'] = array('id' => $horaireOuverture->getHoraire()->getId());
         $variables['titre'] = "Edition de l'ouverture ".$horaireOuverture->getJour().".";
         $variables['texteConfirmation'] = "L'ouverture du ### a bien été modifié !";
         $variables['texteConfirmationEval']["###"] = '$element->getJour();';
