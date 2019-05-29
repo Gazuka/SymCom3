@@ -1,0 +1,52 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}Modification de : {{ element.titre }}{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron m-5">
+        <h1>Modification de : {{ element.titre }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
+        {{ form_end(form) }}        
+    </div>
+
+    {# Affichage des ArticleContent #}
+    <div class="jumbotron m-5 bg-info">
+
+        <ul class="nav justify-content-center bg-warning m-5">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('admin_article_content_new', {'article_id' : element.id } ) }}">Ajouter un contenu</a>
+            </li>
+        </ul>
+
+        <p>Vous avez {{ element.articleContents | length }} contenus :</p>
+
+        <table class="table bg-light">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for content in element.articleContents %}
+                    <tr> 
+                        <th scope="row">{{ content.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_article_content_edit', { 'id': element.id }) }}">
+                                {{ content.position }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

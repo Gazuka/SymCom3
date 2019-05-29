@@ -63,7 +63,6 @@ class OutilsController extends AbstractController
                 $findBy = $delete['findBy'];
                 $classEnfant = $delete['classEnfant'];
                 $recup = $delete['repo']->findBy([$findBy => $element]);
-                dump($recup);
                 foreach($recup as $elem)
                 {
                 eval('$elems = $element->get'.$classEnfant.'();');

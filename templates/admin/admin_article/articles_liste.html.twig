@@ -1,0 +1,39 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <ul class="nav justify-content-center bg-warning m-5">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('admin_article_article_new') }}">Ajouter un article</a>
+        </li>
+    </ul>    
+
+    <div class="jumbotron m-5">
+        <p>Vous avez {{ articles | length }} articles :</p>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr> 
+                        <th scope="row">{{ article.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_article_article_edit', { 'id': article.id }) }}">
+                                {{ article.titre }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
