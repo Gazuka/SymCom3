@@ -14,7 +14,11 @@ class ArticleContentCardType extends AbstractType
         $builder
             ->add('titre')
             ->add('contenu')
-            //->add('articleContent')
+            ->add('position')
+            ->add('nbrColSm')
+            ->add('nbrColMd')
+            ->add('nbrColLg')
+            ->add('nbrColXl')
         ;
     }
 

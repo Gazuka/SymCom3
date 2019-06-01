@@ -26,11 +26,12 @@
         </ul>
 
         <p>Vous avez {{ element.nbrContent }} contenus :</p>
-        
+
+        <div class='row'>        
         {% for content in element.contenu %}
-            {{ content.class }}
-            {{ content.id }} - {{ content.titre }} <br/>
+            {{ content | ContentSort }}
         {% endfor %}
+        </div>
 
         {#
         <table class="table bg-light">

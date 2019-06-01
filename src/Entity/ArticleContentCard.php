@@ -33,6 +33,31 @@ class ArticleContentCard extends ArticleContentSort
      */
     private $articleContent;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $position;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nbrColSm;
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nbrColMd;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nbrColLg;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nbrColXl;
+
     public function getId(): ?int
     {
         return $this->id;
