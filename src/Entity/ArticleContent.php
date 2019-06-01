@@ -55,10 +55,19 @@ class ArticleContent
         $this->nbrContent = sizeof($this->articleContentCards);
     }
 
-    private function getContenu()
+    private function refreshContenu()
     {
-        // Boucler sur tous les éléments possibles (ajouter une position aux ContentsSort)
+        $this->contenu = array();
+        // Boucler sur tous les éléments possibles
+        foreach($this->articleContentCards as $articleContentCard)
+        {
+            array_push($this->contenu, $articleContentCard);
+        }
+    }
 
+    public function getContenu()
+    {
+        $this->refreshContenu();
         return $this->contenu;
     }
 

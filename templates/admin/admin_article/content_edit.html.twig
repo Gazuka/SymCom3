@@ -26,8 +26,9 @@
         </ul>
 
         <p>Vous avez {{ element.nbrContent }} contenus :</p>
-
-        {% for content in element.articleContentCards %} {# changer articleContentCards par Contenu !!!! #}
+        
+        {% for content in element.contenu %}
+            {{ content.class }}
             {{ content.id }} - {{ content.titre }} <br/>
         {% endfor %}
 

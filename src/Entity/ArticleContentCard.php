@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\ArticleContentSort;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleContentCardRepository")
  */
-class ArticleContentCard
+class ArticleContentCard extends ArticleContentSort
 {
     /**
      * @ORM\Id()
