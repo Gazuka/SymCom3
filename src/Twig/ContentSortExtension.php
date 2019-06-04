@@ -7,12 +7,13 @@ use Twig\Extension\AbstractExtension;
 
 use App\Entity\ArticleContentSort;
 use App\Entity\ArticleContentCard;
+use App\Entity\ArticleContentImg;
 
 class ContentSortExtension extends AbstractExtension
 {
     public function getFilters()
     {
-        return [new TwigFilter('ContentSort', [$this, 'choisirSort'], ['is_safe' => ['html']])];
+        return [new TwigFilter('ContentSort', [$this, 'choisirSort'], ['is_safe' => ['html', 'twig']])];
     }
 
     public function choisirSort($ContentSort)
@@ -23,33 +24,57 @@ class ContentSortExtension extends AbstractExtension
             case 'Card':
                 return $this->Card($ContentSort);
             break;
+            case 'Img':
+                return $this->Img($ContentSort);
+            break;
         }
     }
 
     private function Edit($ContentSort)
     {
-        return "<div class='text-right'><a href='#'><i class='fas fa-edit'></i></a></div>";
+        return "<div class='text-right'><a href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/edit'><i class='fas fa-edit'></i></a></div>";
+    }
+
+    private function Size($ContentSort)
+    {
+        $col = "";
+        if($ContentSort->getNbrColSm()){$col .= " col-sm-".$ContentSort->getNbrColSm();}else{$col .= " col-sm-12";}
+        if($ContentSort->getNbrColMd()){$col .= " col-md-".$ContentSort->getNbrColMd();}
+        if($ContentSort->getNbrColLg()){$col .= " col-lg-".$ContentSort->getNbrColLg();}
+        if($ContentSort->getNbrColXl()){$col .= " col-xl-".$ContentSort->getNbrColXl();}
+        return $col;
     }
 
     private function Card($ContentCard)
     {
-        $col = "";
-        dump($ContentCard->getNbrColSm());
-        if($ContentCard->getNbrColSm()){$col .= " col-sm-".$ContentCard->getNbrColSm();}else{$col .= " col-sm-12";}
-        if($ContentCard->getNbrColMd()){$col .= " col-md-".$ContentCard->getNbrColMd();}
-        if($ContentCard->getNbrColLg()){$col .= " col-lg-".$ContentCard->getNbrColLg();}
-        if($ContentCard->getNbrColXl()){$col .= " col-xl-".$ContentCard->getNbrColXl();}
+        $col = $this->Size($ContentCard);
         
         $html =
         "
         <div class='".$col."  mb-3'>
             <div class='card'>
-                <div class='card-body'>
-                    <h5 class='card-title'>".$ContentCard->getTitre()."</h5>
+                <h5 class='card-header'>".$ContentCard->getTitre()."</h5>
+                <div class='card-body text-justify'>                    
                     <p class='card-text'>".$ContentCard->getContenu()."</p>                
                 </div>
             </div>".
             $this->Edit($ContentCard)
+        ."
+        </div>
+        ";
+
+        return $html;
+    }
+
+    private function Img($ContentImg)
+    {
+        $col = $this->Size($ContentImg);
+        $html =
+        "
+        <div class='".$col."  mb-3'>
+            <img src='\img\articles\\".$ContentImg->getUrl()."' class='rounded float-left img-fluid' alt='".$ContentImg->getTitre()."'>".
+            
+            $this->Edit($ContentImg)
         ."
         </div>
         ";

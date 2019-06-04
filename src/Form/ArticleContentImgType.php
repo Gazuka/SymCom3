@@ -2,26 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\ArticleContent;
+use App\Entity\ArticleContentImg;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleContentType extends AbstractType
+class ArticleContentImgType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('position')
             ->add('titre')
-            //->add('article')
+            ->add('url')
+            ->add('position')
+            ->add('nbrColSm')
+            ->add('nbrColMd')
+            ->add('nbrColLg')
+            ->add('nbrColXl')
+            ->add('articleContent')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ArticleContent::class,
+            'data_class' => ArticleContentImg::class,
         ]);
     }
 }

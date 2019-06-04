@@ -1,9 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends '_base.html.twig' %}
 
 {% block title %}Ville de Guesnain - {{ article.titre }}{% endblock %}
 
 {% block body %}
-    <h3>{{ article.titre }}</h3>
-    <br/>
-    {{ article.contenu | raw }}
+    <h2 class="h3 mb-4">{{ article.titre }}</h4>
+    {% if article.publie %}
+        <p>Cet article n'est plus disponible...</p>
+    {% else %}
+        {% for content in article.articleContents %}
+            {% for elem in content.contenu %}
+                {{ elem | ContentSort }}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Entity\Agenda;
+use App\Entity\Article;
 use App\Entity\Personnel;
 use App\Entity\Structure;
 use Symfony\Component\Routing\Annotation\Route;
@@ -74,5 +75,19 @@ class MairieController extends AbstractController
 
         $this->structure['structure'] = $structure;
         return $this->render('mairie/structure.html.twig', $this->structure);
+    }
+
+    /**
+     * @Route("/article/{id}", name="mairie_article")
+     */
+    public function article($id)
+    {
+        $this->StructureRender(); 
+        $repo = $this->getDoctrine()->getRepository(Article::class);
+        
+        $article = $repo->find($id);
+
+        $this->structure['article'] = $article;
+        return $this->render('mairie/article.html.twig', $this->structure);
     }
 }

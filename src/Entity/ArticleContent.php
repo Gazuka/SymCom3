@@ -38,10 +38,21 @@ class ArticleContent
 
     private $contenu;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titre;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleContentImg", mappedBy="articleContent")
+     */
+    private $articleContentImgs;
+
     public function __construct()
     {
         $this->articleContentCards = new ArrayCollection();
-        $this->refreshNbrContent();
+        $this->articleContentImgs = new ArrayCollection();
+        $this->refreshNbrContent();        
     }
 
     public function __toString()
@@ -52,7 +63,7 @@ class ArticleContent
     private function refreshNbrContent()
     {
         // Boucler sur tous les éléments possibles
-        $this->nbrContent = sizeof($this->articleContentCards);
+        $this->nbrContent = sizeof($this->articleContentCards) + sizeof($this->articleContentImgs);
     }
 
     private function refreshContenu()
@@ -62,6 +73,27 @@ class ArticleContent
         foreach($this->articleContentCards as $articleContentCard)
         {
             array_push($this->contenu, $articleContentCard);
+        }
+        foreach($this->articleContentImgs as $articleContentImg)
+        {
+            array_push($this->contenu, $articleContentImg);
+        }
+        usort($this->contenu, array($this, "orderByPosition"));        
+    }
+
+    private function orderByPosition($a, $b)
+    {
+        //retourner 0 en cas d'égalité
+        if ($a->getPosition() == $b->getPosition()) 
+        {
+            return 0;
+        }
+        else if ($a->getPosition() < $b->getPosition())
+        {//retourner -1 en cas d’infériorité
+            return -1;
+        }
+        else {//retourner 1 en cas de supériorité 
+            return 1;
         }
     }
 
@@ -133,6 +165,49 @@ class ArticleContent
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleContentImg[]
+     */
+    public function getArticleContentImgs(): Collection
+    {
+        return $this->articleContentImgs;
+    }
+
+    public function addArticleContentImg(ArticleContentImg $articleContentImg): self
+    {
+        if (!$this->articleContentImgs->contains($articleContentImg)) {
+            $this->articleContentImgs[] = $articleContentImg;
+            $articleContentImg->setArticleContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleContentImg(ArticleContentImg $articleContentImg): self
+    {
+        if ($this->articleContentImgs->contains($articleContentImg)) {
+            $this->articleContentImgs->removeElement($articleContentImg);
+            // set the owning side to null (unless already changed)
+            if ($articleContentImg->getArticleContent() === $this) {
+                $articleContentImg->setArticleContent(null);
+            }
+        }
 
         return $this;
     }

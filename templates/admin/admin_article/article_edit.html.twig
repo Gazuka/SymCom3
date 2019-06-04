@@ -32,6 +32,7 @@
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Position</th>
+                <th scope="col">Titre</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,8 +40,13 @@
                     <tr> 
                         <th scope="row">{{ content.id }}</th>
                         <td>
-                            <a href="{{ path('admin_article_content_edit', { 'id': element.id }) }}">
+                            <a href="{{ path('admin_article_content_edit', { 'id': content.id }) }}">
                                 {{ content.position }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_article_content_edit', { 'id': content.id }) }}">
+                                {{ content.titre }}
                             </a>
                         </td>
                     </tr>

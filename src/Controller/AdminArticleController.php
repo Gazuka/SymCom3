@@ -6,7 +6,9 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Entity\ArticleContent;
 use App\Form\ArticleContentType;
+use App\Entity\ArticleContentImg;
 use App\Entity\ArticleContentCard;
+use App\Form\ArticleContentImgType;
 use App\Controller\OutilsController;
 use App\Form\ArticleContentCardType;
 use App\Repository\ArticleRepository;
@@ -152,10 +154,54 @@ class AdminArticleController extends OutilsController
         $variables['manager'] = $manager;
         $variables['element'] = $articleContentCard;
         $variables['classType'] = ArticleContentCardType::class;
-        $variables['pagedebase'] = 'admin/element_edit.html.twig';
+        $variables['pagedebase'] = 'admin/admin_article/card_edit.html.twig';
         $variables['pagederesultat'] = 'admin_article_content_edit';
-        $variables['pagederesultatConfig'] = array('id' => $articleContentCard->getContent()->getId());
-        $variables['titre'] = "Edition de l'article ".$articleContentCard->getContent()->getArticle()->getTitre().".";
+        $variables['pagederesultatConfig'] = array('id' => $articleContentCard->getArticleContent()->getId());
+        $variables['titre'] = "Edition de l'article ".$articleContentCard->getArticleContent()->getArticle()->getTitre().".";
+        $variables['texteConfirmation'] = "L'article a bien été modifié !";
+        
+        return $this->formElement($variables);
+    }
+
+    /** GESTION DES ARTICLES IMG ***************************************************************************************************************************************/
+    /**
+     * Création d'un articleContentImg
+     * 
+     * @Route("/admin/img/new/{content_id}", name="admin_article_img_new")
+     *
+     * @return Response
+     */
+    public function creerArticleContentImg(Request $request, ObjectManager $manager, ArticleContentRepository $repo, $content_id):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $element = new ArticleContentImg();
+        $content = $repo->find($content_id);
+        $element->setArticleContent($content); 
+        $variables['element'] = $element;
+        $variables['classType'] = ArticleContentImgType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_article_content_edit';
+        $variables['pagederesultatConfig'] = array('id' => $content_id);
+        $variables['titre'] = "Création d'un contenu";
+        $variables['texteConfirmation'] = "Le contenu a bien été créé !";
+        
+        return $this->formElement($variables);
+    }   
+    /**
+     * Permet d'afficher le formulaire d'édition d'un articleContentCard
+     *
+     * @Route("/admin/admin_article/img/{id}/edit", name="admin_article_img_edit")
+     * @return Response
+     */
+    public function editArticleContentImg(ArticleContentImg $articleContentImg, Request $request, ObjectManager $manager):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $articleContentImg;
+        $variables['classType'] = ArticleContentImgType::class;
+        $variables['pagedebase'] = 'admin/admin_article/img_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_article_content_edit';
+        $variables['pagederesultatConfig'] = array('id' => $articleContentImg->getArticleContent()->getId());
+        $variables['titre'] = "Edition de l'article ".$articleContentImg->getArticleContent()->getArticle()->getTitre().".";
         $variables['texteConfirmation'] = "L'article a bien été modifié !";
         
         return $this->formElement($variables);
