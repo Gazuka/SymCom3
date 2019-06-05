@@ -7,10 +7,30 @@
     {% if article.publie %}
         <p>Cet article n'est plus disponible...</p>
     {% else %}
-        {% for content in article.articleContents %}
-            {% for elem in content.contenu %}
-                {{ elem | ContentSort }}
-            {% endfor %}
-        {% endfor %}
+        <div class="row">
+            <div class="accordion" id="accordionArticles">
+                {% for content in article.articleContents %}
+                    <div class="card">
+                        <div class="card-header" id="heading_{{content.id}}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{content.id}}" aria-expanded="true" aria-controls="collapse_{{content.id}}">
+                                    <h3 class="h5">{{content.titre}}</h3>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapse_{{content.id}}" class="collapse show" aria-labelledby="heading_{{content.id}}" data-parent="#accordionArticles">
+                            <div class="card-body">
+                                <div class="row">    
+                                    {% for elem in content.contenu %}
+                                        {{ elem | ContentSort }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                    
+                {% endfor %}
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

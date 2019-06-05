@@ -8,9 +8,11 @@ use App\Entity\ArticleContent;
 use App\Form\ArticleContentType;
 use App\Entity\ArticleContentImg;
 use App\Entity\ArticleContentCard;
+use App\Entity\ArticleContentJumbo;
 use App\Form\ArticleContentImgType;
 use App\Controller\OutilsController;
 use App\Form\ArticleContentCardType;
+use App\Form\ArticleContentJumboType;
 use App\Repository\ArticleRepository;
 use App\Repository\ArticleContentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -199,6 +201,50 @@ class AdminArticleController extends OutilsController
         $variables['element'] = $articleContentImg;
         $variables['classType'] = ArticleContentImgType::class;
         $variables['pagedebase'] = 'admin/admin_article/img_edit.html.twig';
+        $variables['pagederesultat'] = 'admin_article_content_edit';
+        $variables['pagederesultatConfig'] = array('id' => $articleContentImg->getArticleContent()->getId());
+        $variables['titre'] = "Edition de l'article ".$articleContentImg->getArticleContent()->getArticle()->getTitre().".";
+        $variables['texteConfirmation'] = "L'article a bien été modifié !";
+        
+        return $this->formElement($variables);
+    }
+
+    /** GESTION DES ARTICLES JUMBO *************************************************************************************************************************************/
+    /**
+     * Création d'un articleContentJumbo
+     * 
+     * @Route("/admin/jumbo/new/{content_id}", name="admin_article_jumbo_new")
+     *
+     * @return Response
+     */
+    public function creerArticleContentJumbo(Request $request, ObjectManager $manager, ArticleContentRepository $repo, $content_id):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $element = new ArticleContentJumbo();
+        $content = $repo->find($content_id);
+        $element->setArticleContent($content); 
+        $variables['element'] = $element;
+        $variables['classType'] = ArticleContentJumboType::class;
+        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagederesultat'] = 'admin_article_content_edit';
+        $variables['pagederesultatConfig'] = array('id' => $content_id);
+        $variables['titre'] = "Création d'un contenu";
+        $variables['texteConfirmation'] = "Le contenu a bien été créé !";
+        
+        return $this->formElement($variables);
+    }   
+    /**
+     * Permet d'afficher le formulaire d'édition d'un articleContentJumbo
+     *
+     * @Route("/admin/admin_article/jumbo/{id}/edit", name="admin_article_jumbo_edit")
+     * @return Response
+     */
+    public function editArticleContentJumbo(ArticleContentJumbo $articleContentJumbo, Request $request, ObjectManager $manager):Response {
+        $variables['request'] = $request;
+        $variables['manager'] = $manager;
+        $variables['element'] = $articleContentJumbo;
+        $variables['classType'] = ArticleContentJumboType::class;
+        $variables['pagedebase'] = 'admin/admin_article/jumbo_edit.html.twig';
         $variables['pagederesultat'] = 'admin_article_content_edit';
         $variables['pagederesultatConfig'] = array('id' => $articleContentImg->getArticleContent()->getId());
         $variables['titre'] = "Edition de l'article ".$articleContentImg->getArticleContent()->getArticle()->getTitre().".";

@@ -19,7 +19,6 @@ class ArticleContentImgType extends AbstractType
             ->add('nbrColMd')
             ->add('nbrColLg')
             ->add('nbrColXl')
-            ->add('articleContent')
         ;
     }
 

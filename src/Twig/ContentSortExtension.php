@@ -8,6 +8,7 @@ use Twig\Extension\AbstractExtension;
 use App\Entity\ArticleContentSort;
 use App\Entity\ArticleContentCard;
 use App\Entity\ArticleContentImg;
+use App\Entity\ArticleContentJumbo;
 
 class ContentSortExtension extends AbstractExtension
 {
@@ -26,6 +27,9 @@ class ContentSortExtension extends AbstractExtension
             break;
             case 'Img':
                 return $this->Img($ContentSort);
+            break;
+            case 'Jumbo':
+                return $this->Jumbo($ContentSort);
             break;
         }
     }
@@ -77,6 +81,17 @@ class ContentSortExtension extends AbstractExtension
             $this->Edit($ContentImg)
         ."
         </div>
+        ";
+
+        return $html;
+    }
+
+    private function Jumbo($ContentJumbo)
+    {
+        $col = $this->Size($ContentJumbo);
+        
+        $html =
+        "mon jumbo
         ";
 
         return $html;

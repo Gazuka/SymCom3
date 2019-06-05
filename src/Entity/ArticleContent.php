@@ -48,11 +48,17 @@ class ArticleContent
      */
     private $articleContentImgs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleContentJumbo", mappedBy="articleContent")
+     */
+    private $articleContentJumbos;
+
     public function __construct()
     {
         $this->articleContentCards = new ArrayCollection();
         $this->articleContentImgs = new ArrayCollection();
-        $this->refreshNbrContent();        
+        $this->articleContentJumbos = new ArrayCollection();
+        $this->refreshNbrContent();                
     }
 
     public function __toString()
@@ -63,7 +69,7 @@ class ArticleContent
     private function refreshNbrContent()
     {
         // Boucler sur tous les éléments possibles
-        $this->nbrContent = sizeof($this->articleContentCards) + sizeof($this->articleContentImgs);
+        $this->nbrContent = sizeof($this->articleContentCards) + sizeof($this->articleContentImgs) + sizeof($this->articleContentJumbos);
     }
 
     private function refreshContenu()
@@ -77,6 +83,10 @@ class ArticleContent
         foreach($this->articleContentImgs as $articleContentImg)
         {
             array_push($this->contenu, $articleContentImg);
+        }
+        foreach($this->articleContentJumbos as $articleContentJumbo)
+        {
+            array_push($this->contenu, $articleContentJumbo);
         }
         usort($this->contenu, array($this, "orderByPosition"));        
     }
@@ -206,6 +216,37 @@ class ArticleContent
             // set the owning side to null (unless already changed)
             if ($articleContentImg->getArticleContent() === $this) {
                 $articleContentImg->setArticleContent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleContentJumbo[]
+     */
+    public function getArticleContentJumbos(): Collection
+    {
+        return $this->articleContentJumbos;
+    }
+
+    public function addArticleContentJumbo(ArticleContentJumbo $articleContentJumbo): self
+    {
+        if (!$this->articleContentJumbos->contains($articleContentJumbo)) {
+            $this->articleContentJumbos[] = $articleContentJumbo;
+            $articleContentJumbo->setArticleContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleContentJumbo(ArticleContentJumbo $articleContentJumbo): self
+    {
+        if ($this->articleContentJumbos->contains($articleContentJumbo)) {
+            $this->articleContentJumbos->removeElement($articleContentJumbo);
+            // set the owning side to null (unless already changed)
+            if ($articleContentJumbo->getArticleContent() === $this) {
+                $articleContentJumbo->setArticleContent(null);
             }
         }
 

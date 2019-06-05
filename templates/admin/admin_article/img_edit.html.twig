@@ -2,17 +2,6 @@
 
 {% block title %}Modification de : {#{ element.titre }#}{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="/ckeditor/ckeditor.js"></script>
-    <script src="/ckfinder/ckfinder.js"></script>
-    <script>
-        // Replace the <textarea id="editor1"> with a CKEditor
-        var editor = CKEDITOR.replace( 'article_content_img_contenu' );
-        CKFinder.setupCKEditor( editor );
-    </script>
-{% endblock %}
-
 {% block body %}
 
     <div class="jumbotron m-5">

@@ -1,0 +1,30 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}Modification de : {#{ element.titre }#}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/ckfinder/ckfinder.js"></script>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        var editor = CKEDITOR.replace( 'article_content_jumbo_intro' );
+        CKFinder.setupCKEditor( editor );
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron m-5">
+        <h1>Modification de : {#{ element.titre }#}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
+        {{ form_end(form) }}        
+    </div>
+
+{% endblock %}
