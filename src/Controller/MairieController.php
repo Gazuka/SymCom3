@@ -9,6 +9,7 @@ use App\Entity\Personnel;
 use App\Entity\Structure;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class MairieController extends AbstractController
 {
@@ -41,7 +42,7 @@ class MairieController extends AbstractController
     }
 
     /**
-     * @Route("/", name="mairie")
+     * @Route("/", name="accueil")
      */
     public function index()
     {
@@ -50,7 +51,16 @@ class MairieController extends AbstractController
     }
 
     /**
-     * @Route("/municipalite", name="mairie_conseilmunicipal")
+     * @Route("public/", name="mairie")
+     */
+    public function accueil()
+    {
+        $this->StructureRender();        
+        return $this->render('mairie/accueil.html.twig', $this->structure);
+    }
+
+    /**
+     * @Route("public/municipalite", name="mairie_conseilmunicipal")
      */
     public function conseilMunicipal()
     {
@@ -64,7 +74,7 @@ class MairieController extends AbstractController
     }
 
     /**
-     * @Route("/structure/{id}", name="mairie_structure")
+     * @Route("public/structure/{id}", name="mairie_structure")
      */
     public function structure($id)
     {
@@ -78,7 +88,7 @@ class MairieController extends AbstractController
     }
 
     /**
-     * @Route("/article/{id}", name="mairie_article")
+     * @Route("public/article/{id}", name="mairie_article")
      */
     public function article($id)
     {
