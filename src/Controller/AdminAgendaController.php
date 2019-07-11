@@ -42,7 +42,7 @@ class AdminAgendaController extends OutilsController
         $variables['pagedebase'] = 'admin/element_new.html.twig';
         $variables['pagederesultat'] = 'admin_agenda_agendas_liste';
         $variables['titre'] = "Création d'un agenda";
-        $dependances = array('Events' => 'Agenda');
+        $variables['dependances'] = array('Events' => 'Agenda');
         $variables['texteConfirmation'] = "L'agenda ### a bien été créé !";
         $variables['texteConfirmationEval']["###"] = '$element->getNom();';
         
@@ -75,7 +75,7 @@ class AdminAgendaController extends OutilsController
         $variables['pagedebase'] = 'admin/element_edit.html.twig';
         $variables['pagederesultat'] = 'admin_agenda_agendas_liste';
         $variables['titre'] = "Edition de l'agenda ".$agenda->getNom().".";
-        $dependances = array('Events' => 'Agenda');
+        $variables['dependances'] = array('Events' => 'Agenda');
         $variables['texteConfirmation'] = "L'agenda ### a bien été modifié !";
         $variables['texteConfirmationEval']["###"] = '$element->getNom();';
         

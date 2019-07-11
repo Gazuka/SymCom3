@@ -2,6 +2,10 @@
 
 {% block title %}Modification de : {{ element.article.titre }}{% endblock %}
 
+{% block javascripts %}
+    {% include '_modal_delete.js.twig' %}
+{% endblock %}
+
 {% block body %}
 
     <div class="jumbotron m-5">
@@ -15,6 +19,10 @@
 
         {{ form_end(form) }}        
     </div>
+
+    
+
+    {% include '_modal_delete.html.twig' %}
 
     {# Affichage des ContentSort #}
     <div class="jumbotron m-5 bg-info">

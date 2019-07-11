@@ -32,6 +32,7 @@ class OutilsController extends AbstractController
         //On crée le formulaire pour l'élèment de la classe
         $form = $this->createForm($classType, $element);        
         $form->handleRequest($request);
+        dump($form);
         //On vérifie que le formulaire soit Soumis et valide
         if($form->isSubmitted() && $form->isValid()) 
         {
@@ -107,5 +108,47 @@ class OutilsController extends AbstractController
             'titre' => $titre,
             $elements => $recup
         ]);
+    }
+
+    /**
+     * Supprime un élément
+     *
+     * @return Response
+     */
+    protected function deleteElement($variables):Response {
+        //Varaibles attendues obligatoires !        
+        $element = $variables['element'];
+        //$request = $variables['request'];
+        $manager = $variables['manager'];
+        //$classType = $variables['classType'];
+        //$pagedebase =  $variables['pagedebase'];
+        $pagederesultat = $variables['pagederesultat'];
+        //$titre = $variables['titre'];
+        //$texteConfirmation = $variables['texteConfirmation'];
+
+        //Variables attendues optionnels !
+        if(array_key_exists('pagederesultatConfig', $variables)){$pagederesultatConfig = $variables['pagederesultatConfig'];}else{$pagederesultatConfig = array();}
+        if(array_key_exists('delete', $variables)){$delete = $variables['delete'];}else{$delete = null;}
+
+        //Delete des elements orphelins...
+        if($delete != null)
+        {
+            foreach($delete as $del)
+            {
+                $findBy = $del['findBy'];
+                $classEnfant = $del['classEnfant'];
+                $recup = $del['repo']->findBy([$findBy => $element]);
+                dump($recup);
+                foreach($recup as $elem)
+                {
+                    $manager->remove($elem);
+                }
+            }
+        }
+
+        $manager->remove($element);
+        $manager->flush();
+        
+        return $this->redirectToRoute($pagederesultat, $pagederesultatConfig);
     }
 }

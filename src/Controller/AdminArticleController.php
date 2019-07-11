@@ -18,7 +18,9 @@ use App\Repository\ArticleContentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\ArticleContentImgRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ArticleContentCardRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminArticleController extends OutilsController
@@ -94,7 +96,7 @@ class AdminArticleController extends OutilsController
         $variables['element'] = $element;
         $variables['classType'] = ArticleContentType::class;
         $variables['pagedebase'] = 'admin/element_new.html.twig';
-        $variables['pagederesultat'] = 'admin_article_articles_liste';
+        $variables['pagederesultat'] = 'admin_article_article_edit';
         $variables['pagederesultatConfig'] = array('id' => $article_id);
         $variables['titre'] = "Création d'un contenu";
         $variables['texteConfirmation'] = "Le contenu a bien été créé !";
@@ -113,12 +115,31 @@ class AdminArticleController extends OutilsController
         $variables['element'] = $articleContent;
         $variables['classType'] = ArticleContentType::class;
         $variables['pagedebase'] = 'admin/admin_article/content_edit.html.twig';
-        $variables['pagederesultat'] = 'admin_article_articles_liste';
+        $variables['pagederesultat'] = 'admin_article_article_edit';
         $variables['pagederesultatConfig'] = array('id' => $articleContent->getArticle()->getId());
         $variables['titre'] = "Edition de l'article ".$articleContent->getArticle()->getTitre().".";
         $variables['texteConfirmation'] = "L'article a bien été modifié !";
         
         return $this->formElement($variables);
+    }
+
+    /**
+     * Permet de supprimer un content
+     *
+     * @Route("/admin/admin_article/content/{id}/delete", name="admin_article_content_delete")
+     * @return Response
+     */
+    public function deleteArticleContent(ArticleContent $articleContent, ObjectManager $manager, ArticleContentRepository $repo, ArticleContentCardRepository $repoCard, ArticleContentImgRepository $repoImg):Response {
+        $variables['manager'] = $manager;
+        $variables['element'] = $articleContent;        
+        $variables['pagederesultat'] = 'admin_article_article_edit';
+        $variables['pagederesultatConfig'] = array('id' => $articleContent->getArticle()->getId());   
+        $variables['delete'] = [
+                                ['findBy' => 'articleContent', 'classEnfant' => 'ArticleContentCards', 'repo' => $repoCard],
+                                ['findBy' => 'articleContent', 'classEnfant' => 'ArticleContentImgs', 'repo' => $repoImg]
+                            ];
+
+        return $this->deleteElement($variables);
     }
 
     /** GESTION DES ARTICLES CARD **************************************************************************************************************************************/
@@ -165,6 +186,19 @@ class AdminArticleController extends OutilsController
         return $this->formElement($variables);
     }
 
+    /**
+     * Permet de supprimer articleContentCard
+     *
+     * @Route("/admin/admin_article/card/{id}/delete", name="admin_article_card_delete")
+     * @return Response
+     */
+    public function deleteArticleContentCard(ArticleContentCard $articleContentCard, ObjectManager $manager):Response {
+        $variables['manager'] = $manager;
+        $variables['element'] = $articleContentCard;        
+        $variables['pagederesultat'] = 'admin_article_articles_liste';        
+        return $this->deleteElement($variables);
+    }
+
     /** GESTION DES ARTICLES IMG ***************************************************************************************************************************************/
     /**
      * Création d'un articleContentImg
@@ -185,10 +219,10 @@ class AdminArticleController extends OutilsController
         $variables['pagederesultat'] = 'admin_article_content_edit';
         $variables['pagederesultatConfig'] = array('id' => $content_id);
         $variables['titre'] = "Création d'un contenu";
-        $variables['texteConfirmation'] = "Le contenu a bien été créé !";
-        
+        $variables['texteConfirmation'] = "Le contenu a bien été créé !";        
         return $this->formElement($variables);
     }   
+
     /**
      * Permet d'afficher le formulaire d'édition d'un articleContentCard
      *
@@ -207,6 +241,20 @@ class AdminArticleController extends OutilsController
         $variables['texteConfirmation'] = "L'article a bien été modifié !";
         
         return $this->formElement($variables);
+    }
+
+    /**
+     * Permet de supprimer articleContentImg
+     *
+     * @Route("/admin/admin_article/img/{id}/delete", name="admin_article_img_delete")
+     * @return Response
+     */
+    public function deleteArticleContentImg(ArticleContentImg $articleContentImg, ObjectManager $manager):Response {
+        $variables['manager'] = $manager;
+        $variables['element'] = $articleContentImg;        
+        $variables['pagederesultat'] = 'admin_article_content_edit';  
+        $variables['pagederesultatConfig'] = array('id' => $articleContentImg->getArticleContent()->getId());      
+        return $this->deleteElement($variables);
     }
 
     /** GESTION DES ARTICLES JUMBO *************************************************************************************************************************************/
@@ -232,7 +280,8 @@ class AdminArticleController extends OutilsController
         $variables['texteConfirmation'] = "Le contenu a bien été créé !";
         
         return $this->formElement($variables);
-    }   
+    } 
+
     /**
      * Permet d'afficher le formulaire d'édition d'un articleContentJumbo
      *
@@ -246,10 +295,24 @@ class AdminArticleController extends OutilsController
         $variables['classType'] = ArticleContentJumboType::class;
         $variables['pagedebase'] = 'admin/admin_article/jumbo_edit.html.twig';
         $variables['pagederesultat'] = 'admin_article_content_edit';
-        $variables['pagederesultatConfig'] = array('id' => $articleContentImg->getArticleContent()->getId());
-        $variables['titre'] = "Edition de l'article ".$articleContentImg->getArticleContent()->getArticle()->getTitre().".";
+        $variables['pagederesultatConfig'] = array('id' => $articleContentJumbo->getArticleContent()->getId());
+        $variables['titre'] = "Edition de l'article ".$articleContentJumbo->getArticleContent()->getArticle()->getTitre().".";
         $variables['texteConfirmation'] = "L'article a bien été modifié !";
         
         return $this->formElement($variables);
+    }
+
+    /**
+     * Permet de supprimer articleContentJumbo
+     *
+     * @Route("/admin/admin_article/jumbo/{id}/delete", name="admin_article_jumbo_delete")
+     * @return Response
+     */
+    public function deleteArticleContentJumbo(ArticleContentJumbo $articleContentJumbo, ObjectManager $manager):Response {
+        $variables['manager'] = $manager;
+        $variables['element'] = $articleContentJumbo;        
+        $variables['pagederesultat'] = 'admin_article_content_edit';  
+        $variables['pagederesultatConfig'] = array('id' => $articleContentJumbo->getArticleContent()->getId());      
+        return $this->deleteElement($variables);
     }
 }

@@ -36,7 +36,11 @@ class ContentSortExtension extends AbstractExtension
 
     private function Edit($ContentSort)
     {
-        return "<div class='text-right'><a href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/edit'><i class='fas fa-edit'></i></a></div>";
+        return "<div class='text-right'><a class='text-white' href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/edit'><i class='fas fa-edit'></i></a></div>";
+    }
+    private function Delete($ContentSort)
+    {
+        return "<div class='text-right'><a class='confirmModalLink text-danger' href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/delete'><i class='fas fa-trash-alt'></i></a></div>";
     }
 
     private function Size($ContentSort)
@@ -62,7 +66,7 @@ class ContentSortExtension extends AbstractExtension
                     <p class='card-text'>".$ContentCard->getContenu()."</p>                
                 </div>
             </div>".
-            $this->Edit($ContentCard)
+            $this->Edit($ContentCard).$this->Delete($ContentCard)
         ."
         </div>
         ";
@@ -78,7 +82,7 @@ class ContentSortExtension extends AbstractExtension
         <div class='".$col."  mb-3'>
             <img src='\img\articles\\".$ContentImg->getUrl()."' class='rounded float-left img-fluid' alt='".$ContentImg->getTitre()."'>".
             
-            $this->Edit($ContentImg)
+            $this->Edit($ContentImg).$this->Delete($ContentImg)
         ."
         </div>
         ";
@@ -91,7 +95,21 @@ class ContentSortExtension extends AbstractExtension
         $col = $this->Size($ContentJumbo);
         
         $html =
-        "mon jumbo
+        "
+        <div class='".$col."  mb-3'>
+            <div class='jumbotron m-3'>";
+        if($ContentJumbo->getTitreVisibility() == true)
+        {
+            $html .= "<h1 class='display-4'>".$ContentJumbo->getTitre()."</h1>";
+        }
+                
+        $html .=
+        "        <p class='lead'>".$ContentJumbo->getIntro()."</p>
+                <hr class='my-4'>
+                <p>".$ContentJumbo->getContenu()."</p>                
+            </div>".
+            $this->Edit($ContentJumbo).$this->Delete($ContentJumbo)."
+            </div>
         ";
 
         return $html;
