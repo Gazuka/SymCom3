@@ -195,7 +195,8 @@ class AdminArticleController extends OutilsController
     public function deleteArticleContentCard(ArticleContentCard $articleContentCard, ObjectManager $manager):Response {
         $variables['manager'] = $manager;
         $variables['element'] = $articleContentCard;        
-        $variables['pagederesultat'] = 'admin_article_articles_liste';        
+        $variables['pagederesultat'] = 'admin_article_content_edit';  
+        $variables['pagederesultatConfig'] = array('id' => $articleContentCard->getArticleContent()->getId());      
         return $this->deleteElement($variables);
     }
 

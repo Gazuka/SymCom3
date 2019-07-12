@@ -19,17 +19,28 @@ class ArticleType extends ApplicationType
                 ))
             ->add('dateCreation', DateTimeType::class, $this->getConfiguration("Date de création de l'article",
                             "?",
-                            ["data" => new \DateTime('now')]
+                            [
+                                'date_widget'=>'single_text',
+                                'time_widget'=>'single_text'//,
+                                //"data" => new \DateTime('now')
+                                ]
                 ))
             ->add('dateStart', DateTimeType::class, $this->getConfiguration("Date de début de publication",
                             "?",
                             [
                                 'date_widget'=>'single_text',
-                                'time_widget'=>'single_text',
-                                "data" => new \DateTime('now')
+                                'time_widget'=>'single_text'//,
+                                //"data" => new \DateTime('now')
                                 ]
                 ))
-            ->add('dateStop')
+            ->add('dateStop', DateTimeType::class, $this->getConfiguration("Date de fin de publication",
+            "?",
+                            [
+                                'date_widget'=>'single_text',
+                                'time_widget'=>'single_text'//,
+                                //"data" => new \DateTime('now')
+                            ]
+                ))
             ->add('publie')
             ->add('archive')
             ->add('accueil')

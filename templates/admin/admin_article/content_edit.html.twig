@@ -7,40 +7,44 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-4">
+            <div class="jumbotron">
+                <h1 class="h3">Modification de l'article :<br/>{{ element.article.titre }} / {{ element.titre }}</h1>
 
-    <div class="jumbotron m-5">
-        <h1>Modification de l'article : {{ element.article.titre }}</h1>
+                {{ form_start(form) }}
 
-        {{ form_start(form) }}
+                {{ form_widget(form) }}
 
-        {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
 
-        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                {{ form_end(form) }}        
+            </div>
+        </div>
 
-        {{ form_end(form) }}        
-    </div>
+        <div class="col-8">           
 
-    
+            {% include '_modal_delete.html.twig' %}
 
-    {% include '_modal_delete.html.twig' %}
+            {# Affichage des ContentSort #}
+            <div class="jumbotron bg-info">
 
-    {# Affichage des ContentSort #}
-    <div class="jumbotron m-5 bg-info">
+                <ul class="nav justify-content-center bg-warning m-5">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('admin_article_card_new', {'content_id' : element.id } ) }}">Ajouter une card</a>
+                        <a class="nav-link active" href="{{ path('admin_article_img_new', {'content_id' : element.id } ) }}">Ajouter une img</a>
+                        <a class="nav-link active" href="{{ path('admin_article_jumbo_new', {'content_id' : element.id } ) }}">Ajouter un jumbotron</a>
+                    </li>
+                </ul>
 
-        <ul class="nav justify-content-center bg-warning m-5">
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ path('admin_article_card_new', {'content_id' : element.id } ) }}">Ajouter une card</a>
-                <a class="nav-link active" href="{{ path('admin_article_img_new', {'content_id' : element.id } ) }}">Ajouter une img</a>
-                <a class="nav-link active" href="{{ path('admin_article_jumbo_new', {'content_id' : element.id } ) }}">Ajouter un jumbotron</a>
-            </li>
-        </ul>
+                <p>Vous avez {{ element.nbrContent }} contenus :</p>
 
-        <p>Vous avez {{ element.nbrContent }} contenus :</p>
-
-        <div class='row'>        
-        {% for content in element.contenu %}
-            {{ content | ContentSort }}
-        {% endfor %}
+                <div class='row'>        
+                {% for content in element.contenu %}
+                    {{ content | ContentSort }}
+                {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 

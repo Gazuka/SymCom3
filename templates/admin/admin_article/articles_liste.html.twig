@@ -20,6 +20,7 @@
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Titre</th>
+                <th scope="col">Infos</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,20 @@
                             <a href="{{ path('admin_article_article_edit', { 'id': article.id }) }}">
                                 {{ article.titre }}
                             </a>
+                        </td>
+                        <td>
+                            <div>
+                                {% if article.publie %}
+                                    <a class="text-success"><i class='far fa-eye'></i></a>                                    
+                                {% else %}
+                                    <a class="text-danger"><i class='far fa-eye-slash'></i></a>
+                                {% endif %}
+                                {% if article.accueil %}
+                                    <a class="text-success"><i class='fas fa-home'></i></a>
+                                {% else %}
+                                    <a class="text-danger"><i class='fas fa-home'></i></a>
+                                {% endif %}
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

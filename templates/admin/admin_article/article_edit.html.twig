@@ -21,62 +21,67 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-4">
+            <div class="jumbotron">
+                <h1 class="h3">Modification de :<br/>{{ element.titre }}</h1>
 
-    <div class="jumbotron m-5">
-        <h1>Modification de : {{ element.titre }}</h1>
+                {{ form_start(form) }}
 
-        {{ form_start(form) }}
+                {{ form_widget(form) }}
 
-        {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
 
-        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                {{ form_end(form) }}        
+            </div>
+        </div>
+        <div class="col-8">
+            {% include '_modal_delete.html.twig' %}
 
-        {{ form_end(form) }}        
+            {# Affichage des ArticleContent #}
+            <div class="jumbotron bg-info">
+
+                <ul class="nav justify-content-center bg-warning m-5">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('admin_article_content_new', {'article_id' : element.id } ) }}">Ajouter un contenu</a>
+                    </li>
+                </ul>
+
+                <p>Vous avez {{ element.articleContents | length }} contenus :</p>
+
+                <table class="table bg-light">
+                    <thead class="thead-light">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for content in element.articleContents %}
+                            <tr> 
+                                <th scope="row">{{ content.id }}</th>
+                                <td>
+                                    <a href="{{ path('admin_article_content_edit', { 'id': content.id }) }}">
+                                        {{ content.position }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('admin_article_content_edit', { 'id': content.id }) }}">
+                                        {{ content.titre }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class='text-right'><a class='confirmModalLink text-danger' href="{{ path('admin_article_content_delete', { 'id': content.id }) }}"><i class='fas fa-trash-alt'></i></a></div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-    {% include '_modal_delete.html.twig' %}
-
-    {# Affichage des ArticleContent #}
-    <div class="jumbotron m-5 bg-info">
-
-        <ul class="nav justify-content-center bg-warning m-5">
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ path('admin_article_content_new', {'article_id' : element.id } ) }}">Ajouter un contenu</a>
-            </li>
-        </ul>
-
-        <p>Vous avez {{ element.articleContents | length }} contenus :</p>
-
-        <table class="table bg-light">
-            <thead class="thead-light">
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Position</th>
-                <th scope="col">Titre</th>
-                <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for content in element.articleContents %}
-                    <tr> 
-                        <th scope="row">{{ content.id }}</th>
-                        <td>
-                            <a href="{{ path('admin_article_content_edit', { 'id': content.id }) }}">
-                                {{ content.position }}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ path('admin_article_content_edit', { 'id': content.id }) }}">
-                                {{ content.titre }}
-                            </a>
-                        </td>
-                        <td>
-                            <div class='text-right'><a class='confirmModalLink text-danger' href="{{ path('admin_article_content_delete', { 'id': content.id }) }}"><i class='fas fa-trash-alt'></i></a></div>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    
 
 {% endblock %}
