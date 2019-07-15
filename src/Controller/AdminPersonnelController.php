@@ -40,9 +40,10 @@ class AdminPersonnelController extends OutilsController
         $variables['manager'] = $manager;
         $variables['element'] = new Personnel();
         $variables['classType'] = PersonnelType::class;
-        $variables['pagedebase'] = 'admin/element_new.html.twig';
+        $variables['pagedebase'] = 'admin/admin_personnel/personnel_new.html.twig';
         $variables['pagederesultat'] = 'admin_personnel_personnels_liste';
         $variables['titre'] = "Création d'une personne";
+        $variables['dependances'] = array('Fonctions' => 'Personnel');
         $variables['texteConfirmation'] = "Le membre du personnel ### ZZZ a bien été créé !";
         $variables['texteConfirmationEval']["###"] = '$element->getNom();';
         $variables['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
@@ -69,17 +70,19 @@ class AdminPersonnelController extends OutilsController
      * @Route("/admin/admin_personnel/personnel/{id}/edit", name="admin_personnel_personnel_edit")
      * @return Response
      */
-    public function editPersonnel(Personnel $personnel, Request $request, ObjectManager $manager):Response {
+    public function editPersonnel(Personnel $personnel, Request $request, ObjectManager $manager, PersonnelFonctionRepository $repoFonction):Response {
         $variables['request'] = $request;
         $variables['manager'] = $manager;
         $variables['element'] = $personnel;
         $variables['classType'] = PersonnelType::class;
-        $variables['pagedebase'] = 'admin/element_edit.html.twig';
+        $variables['pagedebase'] = 'admin/admin_personnel/personnel_new.html.twig';
         $variables['pagederesultat'] = 'admin_personnel_personnels_liste';
         $variables['titre'] = "Edition de ".$personnel->getNom()." ".$personnel->getPrenom().".";
+        $variables['dependances'] = array('Fonctions' => 'Personnel');
         $variables['texteConfirmation'] = "La fiche de ### ZZZ a bien été modifié !";
         $variables['texteConfirmationEval']["###"] = '$element->getNom();';
         $variables['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
+        $variables['deletes'][1] = array('findBy' => 'personnel', 'classEnfant' => 'Fonctions', 'repo' => $repoFonction );
         
         return $this->formElement($variables);
     }

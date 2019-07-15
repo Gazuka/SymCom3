@@ -23,24 +23,19 @@ class ArticleContentCardType extends ApplicationType
                 ))
             
             ->add('position', IntegerType::class, $this->getConfiguration("Position du contenu",
-                            "Entrez la position de votre Card sur la page",
-                            array("data" => 0)
+                            "Entrez la position de votre Card sur la page"
                 ))
             ->add('nbrColSm', IntegerType::class, $this->getConfiguration("Largeur en colonnes (sur 12) - écran SMALL",
-                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)",
-                            array("data" => 12)
+                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)"
                 ))
             ->add('nbrColMd', IntegerType::class, $this->getConfiguration("Largeur en colonnes (sur 12) - écran MEDIUM",
-                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)",
-                            array("data" => 12)
+                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)"
                 ))
             ->add('nbrColLg', IntegerType::class, $this->getConfiguration("Largeur en colonnes (sur 12) - écran LARGE",
-                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)",
-                            array("data" => 12)
+                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)"
                 ))
             ->add('nbrColXl', IntegerType::class, $this->getConfiguration("Largeur en colonnes (sur 12) - écran EXTRA LARGE",
-                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)",
-                            array("data" => 12)
+                            "Entrez un nombre de colonnes que prendra votre Card (entre 1 et 12)"
                 ))
         ;
     }

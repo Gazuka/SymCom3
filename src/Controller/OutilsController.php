@@ -28,7 +28,7 @@ class OutilsController extends AbstractController
         if(array_key_exists('pagederesultatConfig', $variables)){$pagederesultatConfig = $variables['pagederesultatConfig'];}else{$pagederesultatConfig = array();}
         if(array_key_exists('dependances', $variables)){$dependances = $variables['dependances'];}else{$dependances = null;}
         if(array_key_exists('texteConfirmationEval', $variables)){$texteConfirmationEval = $variables['texteConfirmationEval'];}else{$texteConfirmationEval = array();}
-        if(array_key_exists('delete', $variables)){$delete = $variables['delete'];}else{$delete = null;}
+        if(array_key_exists('deletes', $variables)){$deletes = $variables['deletes'];}else{$deletes = array();}
         //On crée le formulaire pour l'élèment de la classe
         $form = $this->createForm($classType, $element);        
         $form->handleRequest($request);
@@ -59,7 +59,7 @@ class OutilsController extends AbstractController
                 }
             }  
             //Delete des elements orphelins...
-            if($delete != null)
+            foreach($deletes as $delete)
             {
                 $findBy = $delete['findBy'];
                 $classEnfant = $delete['classEnfant'];
@@ -73,6 +73,7 @@ class OutilsController extends AbstractController
                     }
                 }
             }
+
             //On enregistre le tout
             $manager->flush();
             //On affiche un message de validation

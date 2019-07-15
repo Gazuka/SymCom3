@@ -1,0 +1,83 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+
+    <div class="jumbotron m-5">
+        <h1>{{ titre }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+        {{ form_end(form) }}        
+    </div>
+
+{% endblock %}
+
+{# GESTION DES FONCTIONS ################################################################################################################################################}
+{% block _personnel_fonctions_widget %}
+    
+    {{ form_widget(form) }}
+
+<input type="hidden" id="widgets-counter" value="0">
+
+    <div class="form-group">
+        <button type="button" id="add-fonction" class="btn btn-primary">Ajouter une fonction</button>
+    </div>
+{% endblock %}
+
+{% block _personnel_fonctions_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _personnel_fonctions_entry_widget %}
+    <div class="form-group" id="block_{{id}}">
+        <div class="card p-3">
+            <div class="row">
+                <div class="col-11">
+                    {{ form_widget(form) }}
+                </div>                
+                <div class="col-1">
+                    <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{# GESTION DES JAVASCRIPTS ###################################################################################################################################################}
+{% block javascripts %}
+    <script>
+        {# fonctions #}
+        $('#add-fonction').click(function(){
+            // Je récupère le numéro des futurs champs à créer
+            var index = +$('#widgets-counter').val();
+            if(index==0)
+            {
+                index = $('#personnel_fonctions div.form-group').length;
+                $('#widgets-counter').val(index);
+            }       
+            // Je récupère le prototype des entrées
+            const tmpl = $('#personnel_fonctions').data('prototype').replace(/__name__/g, index);
+            // J'injecte ce code au sein de la div
+            $('#personnel_fonctions').append(tmpl);
+            $('#widgets-counter').val(index + 1);
+            // Je gère le bouton supprimer
+            handleDeleteButtons();
+        });
+        
+        function handleDeleteButtons() {
+            $('button[data-action="delete"]').click(function(){
+                const target = this.dataset.target;
+                $(target).remove();
+            });
+        }
+        handleDeleteButtons();
+    </script>
+{% endblock %}

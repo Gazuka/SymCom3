@@ -14,8 +14,8 @@ class PersonnelFonctionType extends AbstractType
         $builder
             ->add('nom')
             ->add('structure')
-            ->add('position')
-            ->add('personnel')
+            //->add('position')
+            //->add('personnel')
         ;
     }
 
