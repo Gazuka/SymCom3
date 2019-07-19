@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use \Imagick;
 
 class AdminPdfController extends AbstractController
 {
@@ -72,8 +73,9 @@ class AdminPdfController extends AbstractController
                 
                 if($type == 'bulletin' && class_exists('Imagick'))
                 {
+                    echo phpinfo();
                     //On crée une miniature de la première page du pdf en png
-                    $im = new \Imagick($this->cheminDesPdfPublic.$nouveau);
+                    $im = new Imagick($this->cheminDesPdfPublic.$nouveau);
                     $im->setIteratorIndex(0);
                     $im->setCompression(Imagick::COMPRESSION_LZW);
                     $im->setCompressionQuality(90);
