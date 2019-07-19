@@ -35,9 +35,13 @@
   <li class="nav-item">
     <a class="nav-link" href="{{ path('admin_article_articles_liste') }}">Articles</a>  
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{{ path('admin_pdf', {'type' : 'arrete'} ) }}">PDF</a>  
-  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pdf</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ path('admin_pdf', {'type' : 'arrete'} ) }}">Arrêtés municipaux</a>
+      <a class="dropdown-item" href="{{ path('admin_pdf', {'type' : 'bulletin'} ) }}">Bulletins municipaux</a>      
+    </div>
+  </li>  
   {#
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>

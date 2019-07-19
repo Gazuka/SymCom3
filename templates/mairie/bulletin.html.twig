@@ -5,24 +5,21 @@
 {% block body %}
     <h2 class="h3 mb-4">Consultation des bulletins municipaux</h2>
     <div class="row">
-        <div class="list-group col-11">
+        <div class="row">
             {% for pdf in pdfs %}
-                <a href="../../pdf{{ asset(pdf.chemin) }}" target="_blank" class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-1 text-danger h1 text-center">
-                            <i class='far fa-file-pdf'></i>
+                <div class="col-sm-6 mb-3">
+                    <div class="card" style="width: 100%;">
+                        <a href="../../pdf{{ asset(pdf.chemin) }}" target="_blanck">
+                            <img src="../../pdf{{ asset(pdf.chemin) }}.png" class="card-img-top" alt="{{pdf.titre}}" />
+                        </a>
+                        <div class="card-body text-right">
+                            <h5 class="card-title text-left">{{pdf.titre}}</h5>
+                            <p class="card-text"><small>{{pdf.date | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') | capitalize}}</small></p>
+                            <a href="../../pdf{{ asset(pdf.chemin) }}" class="btn btn-primary" target="_blanck">Voir le fichier pdf</a>
                         </div>
-                        <div class="col-11">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Arrêté municipal</h5>
-                                <small>{{pdf.date | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') | capitalize}}</small>
-                            </div>
-                            <p class="mb-1">{{pdf.titre}}</p>
-                            <small> </small>
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
+                    </div>                    
+                </div>	    
+            {% endfor %}    
+        </div>	
     </div>        
 {% endblock %}
