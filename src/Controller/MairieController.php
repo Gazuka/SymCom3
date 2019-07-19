@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Pdf;
 use App\Entity\Menu;
 use App\Entity\Agenda;
 use App\Entity\Article;
 use App\Entity\Personnel;
 use App\Entity\Structure;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MairieController extends AbstractController
 {
@@ -21,7 +22,8 @@ class MairieController extends AbstractController
     private function StructureRender()
     {
         $this->structure['agenda'] = $this->Agenda();
-        $this->structure['menu'] = $this->Menu();
+        $this->structure['menu'] = $this->Menu('Guesnain');
+        $this->structure['menurapide'] = $this->Menu('Rapide');
     }
     
     /**
@@ -35,10 +37,10 @@ class MairieController extends AbstractController
     /**
      * Création du menu
      */
-    private function Menu()
+    private function Menu($titre)
     {
         $repo = $this->getDoctrine()->getRepository(Menu::class);
-        return $repo->findOneBy(array('titre' => 'Guesnain'));
+        return $repo->findOneBy(array('titre' => $titre));
     }
 
     /**
@@ -99,5 +101,27 @@ class MairieController extends AbstractController
 
         $this->structure['article'] = $article;
         return $this->render('mairie/article.html.twig', $this->structure);
+    }
+
+    /**
+     * @Route("public/pdf/{type}", name="mairie_pdf")
+     */
+    public function pdf($type)
+    {
+        echo phpinfo();
+
+        $im = new Imagick();
+        $im->setResolution(200, 200);     //Taille de l'apercu
+        $im->readImage('file.pdf[0]');    // première page du pdf
+        $im->setImageFormat('jpg');
+        dump($im);
+
+        $this->StructureRender(); 
+        $repo = $this->getDoctrine()->getRepository(Pdf::class);
+        
+        $PDFs = $repo->findBy(['type' => $type], ['date' => 'desc']);
+        
+        $this->structure['pdfs'] = $PDFs;
+        return $this->render('mairie/'.$type.'.html.twig', $this->structure);
     }
 }

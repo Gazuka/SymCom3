@@ -32,7 +32,7 @@ class OutilsController extends AbstractController
         //On crée le formulaire pour l'élèment de la classe
         $form = $this->createForm($classType, $element);        
         $form->handleRequest($request);
-        dump($form);
+        //dump($form);
         //On vérifie que le formulaire soit Soumis et valide
         if($form->isSubmitted() && $form->isValid()) 
         {

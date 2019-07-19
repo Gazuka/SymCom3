@@ -14,19 +14,18 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ elu.nom }} {{ elu.prenom }}</h5>
                             <ul>
-                            {% for fonction in elu.fonctions %}
-                                {% if loop.first %}
-                                    <h6>{{fonction.nom}}</h6>
-                                {% else %}
-                                    <li>{{fonction.nom}}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
+                                {% for fonction in elu.fonctions %}
+                                    {% if loop.first %}
+                                        <h6>{{fonction.nom}}{% if loop.last %}.{% else %},{% endif %}</h6>
+                                    {% else %}
+                                        <li>{{fonction.nom}}{% if loop.last %}.{% else %},{% endif %}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         {% endfor %}        
     </div>
-
 {% endblock %}

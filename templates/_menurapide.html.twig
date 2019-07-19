@@ -1,0 +1,16 @@
+{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+<div class="list-group">
+  {% for categ in menurapide.categs %}
+        {% for lien in categ.liens %}
+            {% if lien.urlparam == null %}
+                {% if currentPath == path(lien.url) %}{% set active = "active" %}{% else %}{% set active = "" %}{% endif %}
+                <a href="{{ path(lien.url) }}" class="list-group-item list-group-item-action list-group-item-light {{active}}"><i class="fas fa-chevron-right"></i> {{ lien.titre }}</a>
+            {% else %}
+                {% if currentPath == path(lien.url, {'type' : lien.urlparam}) %}{% set active = "active" %}{% else %}{% set active = "" %}{% endif %}
+                <a href="{{ path(lien.url, {'type' : lien.urlparam}) }}" class="list-group-item list-group-item-action list-group-item-light {{active}}"><i class="fas fa-chevron-right"></i> {{ lien.titre }}</a>                
+            {% endif %}
+        {% endfor %}          
+  {% endfor %}  
+
+</div>   

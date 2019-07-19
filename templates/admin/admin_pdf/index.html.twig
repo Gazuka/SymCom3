@@ -1,0 +1,41 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+<div>
+                    
+                    {{ form_start(formdrag) }}
+                    {{ form_widget(formdrag) }}
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(formdrag) }}
+                </div>
+
+
+    <h1>Il reste {{ pdfRestant }} PDF à traiter.</h1>
+    {% if fini == false %}
+        <div class="jumbotron m-5">
+            <div class="row">
+                <div class="col-4">
+                    <object type="application/pdf" name="PDF" id="PDF" width="100%" height="100%"> 
+                        <param name="src" value="/pdf_tmp/{{ dossier }}{{ pdf.chemin }}" /> 
+                        <strong>Le plugin pdf est absent de votre navigateur ce qui vous empêche d'avoir un aperçu du fichier.</strong>
+                    </object>
+                </div>
+                <div class="col-8">
+                    <h3>{{ pdf.chemin }}</h3>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>    
+    {% else %}
+        <p>Plus de pdf à traiter...</p>
+    {% endif %}
+    
+{% endblock %}

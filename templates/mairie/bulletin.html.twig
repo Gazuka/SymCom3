@@ -1,0 +1,28 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ville de Guesnain - Arrêtés municipaux{% endblock %}
+
+{% block body %}
+    <h2 class="h3 mb-4">Consultation des bulletins municipaux</h2>
+    <div class="row">
+        <div class="list-group col-11">
+            {% for pdf in pdfs %}
+                <a href="../../pdf{{ asset(pdf.chemin) }}" target="_blank" class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <div class="col-1 text-danger h1 text-center">
+                            <i class='far fa-file-pdf'></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Arrêté municipal</h5>
+                                <small>{{pdf.date | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') | capitalize}}</small>
+                            </div>
+                            <p class="mb-1">{{pdf.titre}}</p>
+                            <small> </small>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>        
+{% endblock %}

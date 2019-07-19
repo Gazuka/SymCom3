@@ -123,7 +123,7 @@ class AdminMenuController extends OutilsController
         $variables['classType'] = MenuCategType::class;
         $variables['pagedebase'] = 'admin/admin_menu/menucateg_edit.html.twig';
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
-        $variables['titre'] = "Edition de la catégorie ".$menu->getTitre().".";
+        $variables['titre'] = "Edition de la catégorie ".$menuCateg->getTitre().".";
         $variables['texteConfirmation'] = "La catégorie ### a bien été modifié !";
         $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
         
