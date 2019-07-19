@@ -73,7 +73,7 @@ class AdminPdfController extends AbstractController
                 if($type == 'bulletin' && class_exists('Imagick'))
                 {
                     //On crée une miniature de la première page du pdf en png
-                    $im = new Imagick($this->cheminDesPdfPublic.$nouveau);
+                    $im = new \Imagick($this->cheminDesPdfPublic.$nouveau);
                     $im->setIteratorIndex(0);
                     $im->setCompression(Imagick::COMPRESSION_LZW);
                     $im->setCompressionQuality(90);
