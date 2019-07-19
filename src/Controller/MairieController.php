@@ -108,14 +108,6 @@ class MairieController extends AbstractController
      */
     public function pdf($type)
     {
-        echo phpinfo();
-
-        $im = new Imagick();
-        $im->setResolution(200, 200);     //Taille de l'apercu
-        $im->readImage('file.pdf[0]');    // première page du pdf
-        $im->setImageFormat('jpg');
-        dump($im);
-
         $this->StructureRender(); 
         $repo = $this->getDoctrine()->getRepository(Pdf::class);
         

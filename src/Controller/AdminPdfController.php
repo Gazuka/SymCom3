@@ -47,6 +47,9 @@ class AdminPdfController extends AbstractController
 
         $this->typeDePdf = "$type/";
         $pdfs = $this->recherchePdfOrphelin();
+
+        $formDrag = $this->formDragDrop($request);
+
         if(sizeof($pdfs)!=0)
         {
             $pdf = $pdfs[0];
@@ -67,6 +70,16 @@ class AdminPdfController extends AbstractController
                 $pdf->setChemin($nouveau);
                 rename($this->cheminDesPdf.$this->typeDePdf.$nom, $this->cheminDesPdfPublic.$nouveau);
                 
+                if($type == 'bulletin' && class_exists('Imagick'))
+                {
+                    //On crée une miniature de la première page du pdf en png
+                    $im = new Imagick($this->cheminDesPdfPublic.$nouveau);
+                    $im->setIteratorIndex(0);
+                    $im->setCompression(Imagick::COMPRESSION_LZW);
+                    $im->setCompressionQuality(90);
+                    $im->writeImage($this->cheminDesPdfPublic.$nouveau."png");
+                }
+
                 //On persist l'élément
                 $pdf->setType($type);
                 $manager->persist($pdf);
@@ -75,8 +88,6 @@ class AdminPdfController extends AbstractController
                 return $this->redirectToRoute('admin_pdf', ['type' => $type]);
             }   
             $form = $form->createView();
-
-            $formDrag = $this->formDragDrop($request);
 
             return $this->render('/admin/admin_pdf/index.html.twig', [
                 'controller_name' => 'AdminPdfController',
@@ -95,7 +106,8 @@ class AdminPdfController extends AbstractController
                 'controller_name' => 'AdminPdfController',
                 'titre' => 'Recherche des PDFs orphelins',
                 'fini' => true,
-                'pdfRestant' => 0
+                'pdfRestant' => 0,
+                'formdrag' => $formDrag
             ]);
         }
         
