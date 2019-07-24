@@ -38,6 +38,7 @@
 
 # Supp par Jerome
 /.env
+.env
 /public/img/
 /public/pdf/
 /public/pdf_tmp/

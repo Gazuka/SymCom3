@@ -12,13 +12,18 @@ use App\Entity\ArticleContentJumbo;
 
 class ContentSortExtension extends AbstractExtension
 {
+    private $role = 'public';
+
     public function getFilters()
     {
         return [new TwigFilter('ContentSort', [$this, 'choisirSort'], ['is_safe' => ['html', 'twig']])];
     }
 
-    public function choisirSort($ContentSort)
+    //public function Sort($contentSort)
+
+    public function choisirSort($ContentSort, $role = 'public')
     {
+        $this->role = $role;
         $sort = $ContentSort->getClass();
         switch($sort)
         {
@@ -36,11 +41,17 @@ class ContentSortExtension extends AbstractExtension
 
     private function Edit($ContentSort)
     {
-        return "<div class='text-right'><a class='text-white' href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/edit'><i class='fas fa-edit'></i></a></div>";
+        if($this->role == 'admin')
+        {
+            return "<div class='text-right'><a class='text-white' href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/edit'><i class='fas fa-edit'></i></a></div>";
+        }        
     }
     private function Delete($ContentSort)
     {
-        return "<div class='text-right'><a class='confirmModalLink text-danger' href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/delete'><i class='fas fa-trash-alt'></i></a></div>";
+        if($this->role == 'admin')
+        {
+            return "<div class='text-right'><a class='confirmModalLink text-danger' href='/admin/admin_article/".strtolower($ContentSort->getClass())."/".$ContentSort->getId()."/delete'><i class='fas fa-trash-alt'></i></a></div>";
+        }
     }
 
     private function Size($ContentSort)

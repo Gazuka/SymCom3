@@ -41,7 +41,7 @@
 
                 <div class='row'>        
                 {% for content in element.contenu %}
-                    {{ content | ContentSort }}
+                    {{ content | ContentSort('admin') }}
                 {% endfor %}
                 </div>
             </div>
