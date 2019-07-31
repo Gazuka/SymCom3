@@ -1,0 +1,51 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ville de Guesnain - Les commissions municipales{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+            {% for commission in commissions %}
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <h2 class="h5 col-12 mb-4">{{ commission.nom }} :</h2>
+
+                        {% for chef in commission.chef %}
+                            <div class="col-3 text-center m-3">
+                                <div class="m-3">
+                                    {% if chef.photo != null %}
+                                        <img src="\img\{{ chef.photo }}" class="vignettePersonnel" alt="{{ chef.nom }} {{ chef.prenom }}">
+                                    {% else %}
+                                        <img src="\img\content\personnel\anonyme.jpg" class="vignettePersonnel" alt="{{ chef.nom }} {{ chef.prenom }}">
+                                    {% endif %}
+                                </div>
+                                {{ chef.prenom }} {{ chef.nom }}
+                            </div>
+                        {% endfor %}
+                        {% for membre in commission.membres %}
+                            <div class="col-3 text-center m-3">
+                                <div class="m-3">
+                                    {% if membre.photo != null %}
+                                        <img src="\img\{{ membre.photo }}" class="vignettePersonnel" alt="{{ membre.nom }} {{ membre.prenom }}">
+                                    {% else %}
+                                        <img src="\img\content\personnel\anonyme.jpg" class="vignettePersonnel" alt="{{ membre.nom }} {{ membre.prenom }}">
+                                    {% endif %}
+                                </div>
+                                {{ membre.prenom }} {{ membre.nom }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div> 
+            {% endfor %}        
+
+{#
+            <h3>Commission des finances</h3>
+            {% for membre in membresFinances %}
+                <div>
+                    {{ membre.nom }} {{ membre.prenom }}
+                </div>
+            {% endfor %}        #}
+        
+    </div>
+
+{% endblock %}

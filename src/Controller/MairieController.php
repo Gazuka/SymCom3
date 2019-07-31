@@ -76,6 +76,36 @@ class MairieController extends AbstractController
     }
 
     /**
+     * @Route("public/commissions", name="mairie_commissionsmunicipales")
+     */
+    public function commissionsMunicipale()
+    {
+        $this->StructureRender(); 
+        $repo = $this->getDoctrine()->getRepository(Personnel::class);
+        
+        $chefFinances = $repo->findByFonction('Chargé de la commission des Finances');
+        $membresFinances = $repo->findByFonction('Membre de la commission des Finances');
+
+        $chefEnfance = $repo->findByFonction('Chargé de la commission petite enfance et jeunesse');
+        $membresEnfance = $repo->findByFonction('Membre de la commission petite enfance et jeunesse');
+
+        $chefUrbanisme = $repo->findByFonction('Chargé de la commission urbanisme, politique de la ville et environnement');
+        $membresUrbanisme = $repo->findByFonction('Membre de la commission urbanisme, politique de la ville et environnement');
+
+        $chefCommunication = $repo->findByFonction('Déléguée de la commission communication');
+        $membresCommunication = $repo->findByFonction('Membre de la commission communication');
+
+        $commissions = array();
+        $commissions[1] = ['nom' => 'Commission des Finances', 'chef' => $chefFinances, 'membres' => $membresFinances ];
+        $commissions[2] = ['nom' => 'Commission petite enfance et jeunesse', 'chef' => $chefEnfance, 'membres' => $membresEnfance ];
+        $commissions[3] = ['nom' => 'Commission urbanisme, politique de la ville et environnement', 'chef' => $chefUrbanisme, 'membres' => $membresUrbanisme ];
+        $commissions[4] = ['nom' => 'Commission communication', 'chef' => $chefCommunication, 'membres' => $membresCommunication ];
+        $this->structure['commissions'] = $commissions;
+
+        return $this->render('mairie/commissions.html.twig', $this->structure);
+    }
+
+    /**
      * @Route("public/structure/{id}", name="mairie_structure")
      */
     public function structure($id)

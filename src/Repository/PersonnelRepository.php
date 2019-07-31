@@ -77,4 +77,15 @@ JOIN e.Facture f
             ->getResult()
         ;
     }
+
+    public function findByFonction($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftjoin('p.fonctions', 'f')
+            ->andWhere('f.nom = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

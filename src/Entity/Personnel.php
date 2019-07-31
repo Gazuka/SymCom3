@@ -187,4 +187,16 @@ class Personnel
 
         return $this;
     }
+
+    public function verifierFonction($fonctionRecherche)
+    {
+        foreach($this->fonctions as $fonction)
+        {
+            if($fonction->getNom() == $fonctionRecherche)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

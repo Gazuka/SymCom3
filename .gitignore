@@ -42,3 +42,5 @@
 /public/img/
 /public/pdf/
 /public/pdf_tmp/
+/var/log/
+/var/
