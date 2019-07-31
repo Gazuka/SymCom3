@@ -95,11 +95,31 @@ class MairieController extends AbstractController
         $chefCommunication = $repo->findByFonction('Déléguée de la commission communication');
         $membresCommunication = $repo->findByFonction('Membre de la commission communication');
 
+        $chefFete = $repo->findByFonction('Déléguée de la commission culture, fêtes et cérémonies');
+        $membresFete = $repo->findByFonction('Membre de la commission culture, fêtes et cérémonies');
+
+        $chefTravaux = $repo->findByFonction('Déléguée de la commission travaux et sécurité');
+        $membresTravaux = $repo->findByFonction('Membre de la commission travaux et sécurité');
+
+        $chefSport = $repo->findByFonction('Déléguée de la commission des sports');
+        $membresSport = $repo->findByFonction('Membre de la commission des sports');
+
+        $chefEmploi = $repo->findByFonction('Déléguée de la commission emploi, formation');
+        $membresEmploi = $repo->findByFonction('Membre de la commission emploi, formation');
+
+        $chefScolaire = $repo->findByFonction('Déléguée de la commission des écoles');
+        $membresScolaire = $repo->findByFonction('Membre de la commission des écoles');
+
         $commissions = array();
         $commissions[1] = ['nom' => 'Commission des Finances', 'chef' => $chefFinances, 'membres' => $membresFinances ];
         $commissions[2] = ['nom' => 'Commission petite enfance et jeunesse', 'chef' => $chefEnfance, 'membres' => $membresEnfance ];
         $commissions[3] = ['nom' => 'Commission urbanisme, politique de la ville et environnement', 'chef' => $chefUrbanisme, 'membres' => $membresUrbanisme ];
         $commissions[4] = ['nom' => 'Commission communication', 'chef' => $chefCommunication, 'membres' => $membresCommunication ];
+        $commissions[5] = ['nom' => 'Commission culture, fêtes et cérémonies', 'chef' => $chefFete, 'membres' => $membresFete ];
+        $commissions[6] = ['nom' => 'Commission travaux et sécurité', 'chef' => $chefTravaux, 'membres' => $membresTravaux ];
+        $commissions[7] = ['nom' => 'Commission des sports', 'chef' => $chefSport, 'membres' => $membresSport ];
+        $commissions[8] = ['nom' => 'Commission emploi, formation', 'chef' => $chefEmploi, 'membres' => $membresEmploi ];
+        $commissions[9] = ['nom' => 'Commission des écoles', 'chef' => $chefScolaire, 'membres' => $membresScolaire ];
         $this->structure['commissions'] = $commissions;
 
         return $this->render('mairie/commissions.html.twig', $this->structure);
