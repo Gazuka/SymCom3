@@ -45,9 +45,9 @@ class AdminMenuController extends OutilsController
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
         $variables['titre'] = "Création d'un menu";
         $variables['texteConfirmation'] = "Le menu ### a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        $options['texteConfirmationEval']["###"] = '$element->getTitre();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     } 
 
     /**
@@ -58,10 +58,10 @@ class AdminMenuController extends OutilsController
      * @return Response
      */
     public function recupererMenus(MenuRepository $repo):Response {
-        $elements = "menus";
-        $titre = "Listing des menus";
-        $pagederesultat = "admin/admin_menu/menus_liste.html.twig";
-        return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
+        $variables['elements'] = "menus";
+        $variables['titre'] = "Listing des menus";
+        $variables['pagederesultat'] = "admin/admin_menu/menus_liste.html.twig";
+        return $this->findAll($repo, $variables);
     }
 
     /**
@@ -79,9 +79,9 @@ class AdminMenuController extends OutilsController
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
         $variables['titre'] = "Edition du menu ".$menu->getTitre().".";
         $variables['texteConfirmation'] = "Le menu ### a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        $options['texteConfirmationEval']["###"] = '$element->getTitre();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 
     /** GESTION DES CATEGORIES DE MENUS ************************************************************************************************************************************************/
@@ -103,11 +103,11 @@ class AdminMenuController extends OutilsController
         $variables['pagedebase'] = 'admin/element_new.html.twig';
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
         $variables['titre'] = "Création d'une catégorie pour le menu";
-        $variables['dependances'] = array('Menu' => 'MenuCateg');
+        $options['dependances'] = array('Menu' => 'MenuCateg');
         $variables['texteConfirmation'] = "La catégorie ### a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        $options['texteConfirmationEval']["###"] = '$element->getTitre();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }  
     
     /**
@@ -125,9 +125,9 @@ class AdminMenuController extends OutilsController
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
         $variables['titre'] = "Edition de la catégorie ".$menuCateg->getTitre().".";
         $variables['texteConfirmation'] = "La catégorie ### a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        $options['texteConfirmationEval']["###"] = '$element->getTitre();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 
     /** GESTION DES LIENS **************************************************************************************************************************************************************/
@@ -150,9 +150,9 @@ class AdminMenuController extends OutilsController
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
         $variables['titre'] = "Création d'un lien pour le menu";
         $variables['texteConfirmation'] = "Le lien ### a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        $options['texteConfirmationEval']["###"] = '$element->getTitre();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }  
     
     /**
@@ -170,8 +170,8 @@ class AdminMenuController extends OutilsController
         $variables['pagederesultat'] = 'admin_menu_menus_liste';
         $variables['titre'] = "Edition du lien ".$menuLien->getTitre().".";
         $variables['texteConfirmation'] = "Le lien ### a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getTitre();';
+        $options['texteConfirmationEval']["###"] = '$element->getTitre();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 }

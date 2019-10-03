@@ -1,0 +1,27 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ville de Guesnain - Les associations{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="card-deck">               
+            {% for association in associations %}
+                <div class="card" style="width: 18rem;">
+                    {% if association.photo != null %}
+                        <img src="\img\{{ association.photo }}" class="card-img-top" alt="{{ association.nom }}">
+                    {% else %}
+                        <img src="\img\content\personnel\anonyme.jpg" class="card-img-top" alt="{{ association.nom }}">
+                    {% endif %}
+                    <div class="card-body m-1">
+                        <h5 class="card-title">{{ association.nom }}</h5>
+                        <p class="card-text">{{ association.presentation }}</p>                        
+                    </div>
+                    <div class="card-footer text-right">                        
+                        <a class="text-muted" href="#">En savoir plus</a>
+                    </div>
+                </div>
+            {% endfor %}        
+        </div>
+    </div>
+
+{% endblock %}

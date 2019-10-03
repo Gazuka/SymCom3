@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PersonnelMail
 {
+    /**Entité à supprimer  */
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

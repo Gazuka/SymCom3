@@ -1,0 +1,48 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <ul class="nav justify-content-center bg-warning m-5">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('admin_repertoire_fonction_new') }}">Ajouter une fonction</a>
+            <a class="nav-link active" href="{{ path('admin_repertoire_humain_new') }}">Ajouter une personne</a>
+        </li>
+    </ul>
+
+    <div class="jumbotron m-5">
+        <div class="alert alert-primary text-center" role="alert">
+            <a class="alert-link" href="{{ path('admin_repertoire_humains_liste', { 'sort': 'id' }) }}">Voir les personnes...</a>
+        </div>
+
+        <p>Vous avez {{ Fonctions | length }} fonctions :</p>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">Fonction</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fonction in Fonctions %}
+                    <tr> 
+                        <th scope="row">{{ fonction.id }}</th>
+                        <td>
+                            {{ fonction.type }}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_repertoire_fonction_edit', { 'id': fonction.id }) }}">
+                                {{ fonction.nom }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+
+    <div class="jumbotron m-5">
+        <h1>{{ titre }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+        {{ form_end(form) }}        
+    </div>
+
+{% endblock %}
+
+{# GESTION DES MISSIONS ###################################################################################################################################################}
+{% block _association_missions_widget %}
+    
+    {{ form_widget(form) }}
+
+<input type="hidden" id="widgets-missions-counter" value="0">
+
+    <div class="form-group">
+        <button type="button" id="add-mission" class="btn btn-primary">Ajouter une mission</button>
+    </div>
+{% endblock %}
+
+{% block _association_missions_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _association_missions_entry_widget %}
+    <div class="form-group" id="block_{{id}}">
+    <div class="card p-3">
+        <div class="row">
+            <div class="col-11">
+                <div class="row">
+                    <div class="col">
+                        {{ form_widget(form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{# GESTION DES JAVASCRIPTS ###################################################################################################################################################}
+{% block javascripts %}
+    <script>
+        {# missions #}
+        $('#add-mission').click(function(){
+            // Je récupère le numéro des futurs champs à créer
+            var index = +$('#widgets-missions-counter').val();
+            if(index==0)
+            {
+                index = $('#association_missions div.form-group').length;
+                $('#widgets-missions-counter').val(index);
+            }       
+            // Je récupère le prototype des entrées
+            const tmpl = $('#association_missions').data('prototype').replace(/__name__/g, index);
+            // J'injecte ce code au sein de la div
+            $('#association_missions').append(tmpl);
+            $('#widgets-missions-counter').val(index + 1);
+            // Je gère le bouton supprimer
+            handleDeleteButtons();
+        });
+        function handleDeleteButtons() {
+            $('button[data-action="delete"]').click(function(){
+                const target = this.dataset.target;
+                $(target).remove();
+            });
+        }
+        handleDeleteButtons();
+    </script>
+{% endblock %}

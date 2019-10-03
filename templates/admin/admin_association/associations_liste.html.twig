@@ -1,0 +1,48 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <ul class="nav justify-content-center bg-warning m-5">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('admin_association_new') }}">Ajouter une association</a>            
+        </li>
+    </ul>
+
+    <div class="jumbotron m-5">
+                
+        <p>Vous avez {{ Associations | length }} associations :</p>        
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Type</th>
+                <th scope="col">Membres</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for association in Associations %}
+                    <tr> 
+                        <th scope="row">{{ association.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_association_edit', { 'id': association.id }) }}">
+                                {{ association.nom }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ association.presentation }}
+                        </td>
+                        <td>
+                            {{ association.missions | length }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

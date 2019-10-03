@@ -8,6 +8,7 @@ use App\Entity\Agenda;
 use App\Entity\Article;
 use App\Entity\Personnel;
 use App\Entity\Structure;
+use App\Entity\Association;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -165,5 +166,19 @@ class MairieController extends AbstractController
         
         $this->structure['pdfs'] = $PDFs;
         return $this->render('mairie/'.$type.'.html.twig', $this->structure);
+    }
+
+    /**
+     * @Route("public/associations", name="mairie_associations")
+     */
+    public function associations()
+    {
+        $this->StructureRender(); 
+        $repo = $this->getDoctrine()->getRepository(Association::class);
+        
+        $associations = $repo->findAll();
+
+        $this->structure['associations'] = $associations;
+        return $this->render('mairie/associations.html.twig', $this->structure);
     }
 }

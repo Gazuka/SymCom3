@@ -42,11 +42,11 @@ class AdminAgendaController extends OutilsController
         $variables['pagedebase'] = 'admin/element_new.html.twig';
         $variables['pagederesultat'] = 'admin_agenda_agendas_liste';
         $variables['titre'] = "Création d'un agenda";
-        $variables['dependances'] = array('Events' => 'Agenda');
+        $options['dependances'] = array('Events' => 'Agenda');
         $variables['texteConfirmation'] = "L'agenda ### a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }    
     /**
      * Affiche l'ensemble des agendas
@@ -56,10 +56,10 @@ class AdminAgendaController extends OutilsController
      * @return Response
      */
     public function recupererAgendas(AgendaRepository $repo):Response {
-        $elements = "agendas";
-        $titre = "Listing des agendas";
-        $pagederesultat = "admin/admin_agenda/agendas_liste.html.twig";
-        return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
+        $variables['elements'] = "agendas";
+        $variables['titre'] = "Listing des agendas";
+        $variables['pagederesultat'] = "admin/admin_agenda/agendas_liste.html.twig";
+        return $this->findAll($repo, $variables);
     }
     /**
      * Permet d'afficher le formulaire d'édition d'un agenda
@@ -75,11 +75,11 @@ class AdminAgendaController extends OutilsController
         $variables['pagedebase'] = 'admin/element_edit.html.twig';
         $variables['pagederesultat'] = 'admin_agenda_agendas_liste';
         $variables['titre'] = "Edition de l'agenda ".$agenda->getNom().".";
-        $variables['dependances'] = array('Events' => 'Agenda');
+        $options['dependances'] = array('Events' => 'Agenda');
         $variables['texteConfirmation'] = "L'agenda ### a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 
     /** GESTION DES EVENEMENTS D'AGENDAS ***********************************************************************************************************************************************/
@@ -98,11 +98,11 @@ class AdminAgendaController extends OutilsController
         $variables['pagedebase'] = 'admin/element_new.html.twig';
         $variables['pagederesultat'] = 'admin_agenda_evenements_liste';
         $variables['titre'] = "Création d'un événement";
-        $dependances = array('Agendas' => 'Event');
+        $options['dependances'] = array('Agendas' => 'Event');
         $variables['texteConfirmation'] = "L'événement ### a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }    
     /**
      * Affiche l'ensemble des évenements d'agendas
@@ -112,10 +112,10 @@ class AdminAgendaController extends OutilsController
      * @return Response
      */
     public function recupererAgendaEvents(AgendaEventRepository $repo):Response {
-        $elements = "evenements";
-        $titre = "Listing des évenements d'agendas";
-        $pagederesultat = "admin/admin_agenda/evenements_liste.html.twig";
-        return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
+        $variables['elements'] = "evenements";
+        $variables['titre'] = "Listing des évenements d'agendas";
+        $variables['pagederesultat'] = "admin/admin_agenda/evenements_liste.html.twig";
+        return $this->findAll($repo, $variables);
     }
     /**
      * Permet d'afficher le formulaire d'édition d'un évenement d'agenda
@@ -131,10 +131,10 @@ class AdminAgendaController extends OutilsController
         $variables['pagedebase'] = 'admin/element_edit.html.twig';
         $variables['pagederesultat'] = 'admin_agenda_evenements_liste';
         $variables['titre'] = "Edition de l'événement ".$agendaevent->getNom().".";
-        $dependances = array('Agendas' => 'Event'); 
+        $options['dependances'] = array('Agendas' => 'Event'); 
         $variables['texteConfirmation'] = "L'événement ### a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 }

@@ -1,0 +1,108 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <ul class="nav justify-content-center bg-warning m-5">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ path('admin_repertoire_humain_new') }}">Ajouter une personne</a>
+            <a class="nav-link active" href="{{ path('admin_repertoire_fonction_new') }}">Ajouter une fonction</a>
+        </li>
+    </ul>
+
+    <div class="jumbotron m-5">
+        <div class="alert alert-primary text-center" role="alert">
+            <a class="alert-link" href="{{ path('admin_repertoire_fonctions_liste') }}">Voir les fonctions...</a>
+        </div>
+        
+        <p>Vous avez {{ Humains | length }} personnes :</p>        
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Missions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for humain in Humains %}
+                    <tr> 
+                        <th scope="row">{{ humain.id }}</th>
+                        <td>
+                            <a href="{{ path('admin_repertoire_humain_edit', { 'id': humain.id }) }}">
+                                {{ humain.nom }} {{ humain.prenom }}
+                            </a>
+                        </td>
+                        <td>
+                            {% for mission in humain.missions %}
+                                <div class="row">
+                                    <div class="col-1">
+                                        {% if mission.fonction.type == 'employé' %}
+                                            <span class="badge badge-pill badge-primary text-capitalize">{{ mission.fonction.type }}</span>
+                                        {% else %}
+                                            {% if mission.fonction.type == 'élu' %}
+                                                <span class="badge badge-pill badge-danger text-capitalize">{{ mission.fonction.type }}</span>
+                                            {% else %}
+                                                <span class="badge badge-pill badge-success text-capitalize">{{ mission.fonction.type }}</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col">
+                                        <span class="font-weight-bold">
+                                            {% if mission.structure | length > 0 %}
+                                                {{ mission.structure.nom }}
+                                            {% else %}
+                                                {% if mission.association | length > 0 %}
+                                                    {{ mission.association.nom }}                                        
+                                                {% endif %}
+                                            {% endif %}
+                                        :</span>
+                                        
+                                        {% if humain.sexe == 'F' and mission.fonction.nomFeminin != null %}
+                                            {{ mission.fonction.nomFeminin }}
+                                        {% else %}
+                                            {{ mission.fonction.nom }} 
+                                        {% endif %}   
+                                    </div>                                    
+                                    <div class="col-2">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mission_{{ mission.id }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="mission_{{ mission.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">{{ humain.prenom }} {{ humain.nom }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Voulez-vous supprimer la mission <span class="font-weight-bold">{{ mission.fonction.nom }}</span> de {{ humain.prenom }} {{ humain.nom }} ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <a class="btn btn-danger" href="{{ path('admin_repertoire_mission_delete', { 'id': mission.id }) }}">Supprimer</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

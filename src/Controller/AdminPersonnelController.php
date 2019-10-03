@@ -43,12 +43,12 @@ class AdminPersonnelController extends OutilsController
         $variables['pagedebase'] = 'admin/admin_personnel/personnel_new.html.twig';
         $variables['pagederesultat'] = 'admin_personnel_personnels_liste';
         $variables['titre'] = "Création d'une personne";
-        $variables['dependances'] = array('Fonctions' => 'Personnel');
+        $options['dependances'] = array('Fonctions' => 'Personnel');
         $variables['texteConfirmation'] = "Le membre du personnel ### ZZZ a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
-        $variables['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }    
     /**
      * Affiche l'ensemble du personnels
@@ -58,10 +58,10 @@ class AdminPersonnelController extends OutilsController
      * @return Response
      */
     public function recupererPersonnels(PersonnelRepository $repo):Response {
-        $elements = "personnels";
-        $titre = "Listing des personnes";
-        $pagederesultat = "admin/admin_personnel/personnels_liste.html.twig";
-        return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
+        $variables['elements'] = "personnels";
+        $variables['titre'] = "Listing des personnes";
+        $variables['pagederesultat'] = "admin/admin_personnel/personnels_liste.html.twig";
+        return $this->findAll($repo, $variables);
     }
 
     /**
@@ -78,13 +78,13 @@ class AdminPersonnelController extends OutilsController
         $variables['pagedebase'] = 'admin/admin_personnel/personnel_new.html.twig';
         $variables['pagederesultat'] = 'admin_personnel_personnels_liste';
         $variables['titre'] = "Edition de ".$personnel->getNom()." ".$personnel->getPrenom().".";
-        $variables['dependances'] = array('Fonctions' => 'Personnel');
+        $options['dependances'] = array('Fonctions' => 'Personnel');
         $variables['texteConfirmation'] = "La fiche de ### ZZZ a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
-        $variables['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
-        $variables['deletes'][1] = array('findBy' => 'personnel', 'classEnfant' => 'Fonctions', 'repo' => $repoFonction );
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
+        $options['deletes'][1] = array('findBy' => 'personnel', 'classEnfant' => 'Fonctions', 'repo' => $repoFonction );
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 
     /** GESTION DES FONCTIONS **********************************************************************************************************************************************************/
@@ -104,9 +104,9 @@ class AdminPersonnelController extends OutilsController
         $variables['pagederesultat'] = 'admin_personnel_fonctions_liste';
         $variables['titre'] = "Création d'une fonction";
         $variables['texteConfirmation'] = "La fonction ### a bien été créé !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }    
 
     /**
@@ -117,10 +117,10 @@ class AdminPersonnelController extends OutilsController
      * @return Response
      */
     public function recupererPersonnelFonctions(PersonnelFonctionRepository $repo):Response {
-        $elements = "personnelFonctions";
-        $titre = "Listing des fonctions";
-        $pagederesultat = "admin/admin_personnel/fonctions_liste.html.twig";
-        return $this->recupererElements($repo, $elements, $titre, $pagederesultat);
+        $variables['elements'] = "personnelFonctions";
+        $variables['titre'] = "Listing des fonctions";
+        $variables['pagederesultat'] = "admin/admin_personnel/fonctions_liste.html.twig";
+        return $this->findAll($repo, $variables);
     }
 
     /**
@@ -138,8 +138,8 @@ class AdminPersonnelController extends OutilsController
         $variables['pagederesultat'] = 'admin_personnel_fonctions_liste';
         $variables['titre'] = "Edition de la fonction ".$personnelFonction->getNom().".";
         $variables['texteConfirmation'] = "La fonction ### a bien été modifié !";
-        $variables['texteConfirmationEval']["###"] = '$element->getNom();';
+        $options['texteConfirmationEval']["###"] = '$element->getNom();';
         
-        return $this->formElement($variables);
+        return $this->afficherFormulaire($variables, $options);
     }
 }

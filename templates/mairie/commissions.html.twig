@@ -14,7 +14,9 @@
                             <div class="col-3 text-center m-3">
                                 <div class="m-3">
                                     {% if chef.photo != null %}
-                                        <img src="\img\{{ chef.photo }}" class="vignettePersonnel" alt="{{ chef.nom }} {{ chef.prenom }}">
+                                        {#<div class="vignettePersonnel" style="background-image:url(src=/../../img/content/personnel/saenenromuald.jpg)"></div>#}
+                                        {{ chef | Profil }}
+                                        {#<img src="\img\{{ membre.photo }}" class="vignettePersonnel" alt="{{ membre.nom }} {{ membre.prenom }}">#}
                                     {% else %}
                                         <img src="\img\content\personnel\anonyme.jpg" class="vignettePersonnel" alt="{{ chef.nom }} {{ chef.prenom }}">
                                     {% endif %}
@@ -26,7 +28,9 @@
                             <div class="col-3 text-center m-3">
                                 <div class="m-3">
                                     {% if membre.photo != null %}
-                                        <img src="\img\{{ membre.photo }}" class="vignettePersonnel" alt="{{ membre.nom }} {{ membre.prenom }}">
+                                        {#<div class="vignettePersonnel" style="background-image:url(src=/../../img/content/personnel/saenenromuald.jpg)"></div>#}
+                                        {{ membre | Profil }}
+                                        {#<img src="\img\{{ membre.photo }}" class="vignettePersonnel" alt="{{ membre.nom }} {{ membre.prenom }}">#}
                                     {% else %}
                                         <img src="\img\content\personnel\anonyme.jpg" class="vignettePersonnel" alt="{{ membre.nom }} {{ membre.prenom }}">
                                     {% endif %}

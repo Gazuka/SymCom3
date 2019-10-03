@@ -54,9 +54,15 @@ class Structure
      */
     private $horaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Mission", mappedBy="structure")
+     */
+    private $missions;
+
     public function __construct()
     {
         $this->horaires = new ArrayCollection();
+        $this->missions = new ArrayCollection();
     }
 
     public function __toString()
@@ -186,5 +192,36 @@ class Structure
             }            
         }    
         return min($horairesPossibles);
+    }
+
+    /**
+     * @return Collection|Mission[]
+     */
+    public function getMissions(): Collection
+    {
+        return $this->missions;
+    }
+
+    public function addMission(Mission $mission): self
+    {
+        if (!$this->missions->contains($mission)) {
+            $this->missions[] = $mission;
+            $mission->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMission(Mission $mission): self
+    {
+        if ($this->missions->contains($mission)) {
+            $this->missions->removeElement($mission);
+            // set the owning side to null (unless already changed)
+            if ($mission->getStructure() === $this) {
+                $mission->setStructure(null);
+            }
+        }
+
+        return $this;
     }
 }
