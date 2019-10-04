@@ -95,7 +95,7 @@ class AdminRepertoireController extends OutilsController
         $variables['pagedebase'] = 'admin/admin_repertoire/humain_new.html.twig';
         $variables['pagederesultat'] = 'admin_repertoire_humains_liste';
         $variables['titre'] = "Création d'une personne";
-        $variables['dependances'] = array('Missions' => 'Humain');
+        $options['dependances'] = array('Missions' => 'Humain', 'Telephones' => 'Humain', 'Emails' => 'Humain');
         $variables['texteConfirmation'] = "### ZZZ a bien été ajouté(e) au répertoire !";
         $options['texteConfirmationEval']["###"] = '$element->getNom();';        
         $options['texteConfirmationEval']["ZZZ"] = '$element->getPrenom();';
@@ -148,7 +148,7 @@ class AdminRepertoireController extends OutilsController
         $variables['pagedebase'] = 'admin/admin_repertoire/humain_new.html.twig';
         $variables['pagederesultat'] = 'admin_repertoire_humains_liste';
         $variables['titre'] = "Edition de ".$humain->getNom()." ".$humain->getPrenom().".";
-        $options['dependances'] = array('Missions' => 'Humain');
+        $options['dependances'] = array('Missions' => 'Humain', 'Telephones' => 'Humain', 'Emails' => 'Humain');
         $variables['texteConfirmation'] = "La fiche de ### ZZZ a bien été modifié !";
         $options['texteConfirmationEval']["###"] = '$element->getNom();';
         $options['texteConfirmationEval']["###"] = '$element->getPrenom();';

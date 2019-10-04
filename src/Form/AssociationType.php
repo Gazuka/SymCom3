@@ -27,6 +27,7 @@ class AssociationType extends AbstractType
                     ]
                 ])
             ->add('photo')
+            ->add('site')
             ->add('missions', CollectionType::class,
             [
                 'entry_type' => Mission_AssociationType::class,

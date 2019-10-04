@@ -29,7 +29,7 @@ class Telephone
     private $public;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Humain", inversedBy="telephones")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Humain", inversedBy="telephones")
      */
     private $humain;
 
@@ -67,29 +67,15 @@ class Telephone
         return $this;
     }
 
-    /**
-     * @return Collection|Humain[]
-     */
-    public function getHumain(): Collection
+    public function getHumain(): ?Humain
     {
         return $this->humain;
     }
 
-    public function addHumain(Humain $humain): self
+    public function setHumain(?Humain $humain): self
     {
-        if (!$this->humain->contains($humain)) {
-            $this->humain[] = $humain;
-        }
+        $this->humain = $humain;
 
         return $this;
     }
-
-    public function removeHumain(Humain $humain): self
-    {
-        if ($this->humain->contains($humain)) {
-            $this->humain->removeElement($humain);
-        }
-
-        return $this;
-    }    
 }

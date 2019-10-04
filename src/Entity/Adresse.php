@@ -46,6 +46,11 @@ class Adresse
      */
     private $public;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Humain", mappedBy="adresse", cascade={"persist", "remove"})
+     */
+    private $humain;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,24 @@ class Adresse
     public function setPublic(bool $public): self
     {
         $this->public = $public;
+
+        return $this;
+    }
+
+    public function getHumain(): ?Humain
+    {
+        return $this->humain;
+    }
+
+    public function setHumain(?Humain $humain): self
+    {
+        $this->humain = $humain;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newAdresse = $humain === null ? null : $this;
+        if ($newAdresse !== $humain->getAdresse()) {
+            $humain->setAdresse($newAdresse);
+        }
 
         return $this;
     }

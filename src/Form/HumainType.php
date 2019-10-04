@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Humain;
+use App\Form\MailType;
 use App\Entity\Fonction;
+use App\Form\AdresseType;
+use App\Form\TelephoneType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,14 +28,24 @@ class HumainType extends AbstractType
                     ]
                 ])
             ->add('photo')
-            ->add('adresse')
-            //->add('telephones')
-            //->add('emails')
-            /*->add('fonctions', EntityType::class, [
-                'class' => Fonction::class,
-                'multiple' => true,
-                'expanded' => true
-            ])*/
+            ->add('adresse', AdresseType::class,
+            [                
+                'label' => "Adresse :"
+            ])          
+            ->add('telephones', CollectionType::class,
+            [
+                'entry_type' => TelephoneType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => "Téléphones :"
+            ])
+            ->add('emails', CollectionType::class,
+            [
+                'entry_type' => MailType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => "Emails :"
+            ])
             ->add('missions', CollectionType::class,
             [
                 'entry_type' => MissionType::class,

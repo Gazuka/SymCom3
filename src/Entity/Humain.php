@@ -37,26 +37,26 @@ class Humain
      * @ORM\OneToOne(targetEntity="App\Entity\Photo", cascade={"persist", "remove"})
      */
     private $photo;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Adresse")
-     */
-    private $adresse;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Telephone", mappedBy="humain")
-     */
-    private $telephones;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Email", mappedBy="humain")
-     */
-    private $emails;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Mission", mappedBy="humain")
      */
     private $missions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Telephone", mappedBy="humain")
+     */
+    private $telephones;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Email", mappedBy="humain")
+     */
+    private $emails;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", inversedBy="humain", cascade={"persist", "remove"})
+     */
+    private $adresse;
 
     public function __construct()
     {
@@ -122,75 +122,7 @@ class Humain
 
         return $this;
     }
-
-    public function getAdresse(): ?Adresse
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?Adresse $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Telephone[]
-     */
-    public function getTelephones(): Collection
-    {
-        return $this->telephones;
-    }
-
-    public function addTelephone(Telephone $telephone): self
-    {
-        if (!$this->telephones->contains($telephone)) {
-            $this->telephones[] = $telephone;
-            $telephone->addHumain($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTelephone(Telephone $telephone): self
-    {
-        if ($this->telephones->contains($telephone)) {
-            $this->telephones->removeElement($telephone);
-            $telephone->removeHumain($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Email[]
-     */
-    public function getEmails(): Collection
-    {
-        return $this->emails;
-    }
-
-    public function addEmail(Email $email): self
-    {
-        if (!$this->emails->contains($email)) {
-            $this->emails[] = $email;
-            $email->addHumain($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmail(Email $email): self
-    {
-        if ($this->emails->contains($email)) {
-            $this->emails->removeElement($email);
-            $email->removeHumain($this);
-        }
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection|Mission[]
      */
@@ -223,4 +155,78 @@ class Humain
 
         return $this;
     }
+
+    /**
+     * @return Collection|Telephone[]
+     */
+    public function getTelephones(): Collection
+    {
+        return $this->telephones;
+    }
+
+    public function addTelephone(Telephone $telephone): self
+    {
+        if (!$this->telephones->contains($telephone)) {
+            $this->telephones[] = $telephone;
+            $telephone->setHumain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTelephone(Telephone $telephone): self
+    {
+        if ($this->telephones->contains($telephone)) {
+            $this->telephones->removeElement($telephone);
+            // set the owning side to null (unless already changed)
+            if ($telephone->getHumain() === $this) {
+                $telephone->setHumain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Email[]
+     */
+    public function getEmails(): Collection
+    {
+        return $this->emails;
+    }
+
+    public function addEmail(Email $email): self
+    {
+        if (!$this->emails->contains($email)) {
+            $this->emails[] = $email;
+            $email->setHumain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmail(Email $email): self
+    {
+        if ($this->emails->contains($email)) {
+            $this->emails->removeElement($email);
+            // set the owning side to null (unless already changed)
+            if ($email->getHumain() === $this) {
+                $email->setHumain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAdresse(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?Adresse $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }    
 }

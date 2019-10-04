@@ -43,6 +43,11 @@ class Association
      */
     private $missions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $site;
+
     public function __construct()
     {
         $this->missions = new ArrayCollection();
@@ -133,6 +138,18 @@ class Association
                 $mission->setAssociation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSite(): ?string
+    {
+        return $this->site;
+    }
+
+    public function setSite(?string $site): self
+    {
+        $this->site = $site;
 
         return $this;
     }

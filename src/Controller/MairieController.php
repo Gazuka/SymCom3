@@ -181,4 +181,18 @@ class MairieController extends AbstractController
         $this->structure['associations'] = $associations;
         return $this->render('mairie/associations.html.twig', $this->structure);
     }
+
+    /**
+     * @Route("public/association/{id}", name="mairie_association")
+     */
+    public function association($id)
+    {
+        $this->StructureRender(); 
+        $repo = $this->getDoctrine()->getRepository(Association::class);
+        
+        $association = $repo->find($id);
+
+        $this->structure['association'] = $association;
+        return $this->render('mairie/association.html.twig', $this->structure);
+    }
 }
