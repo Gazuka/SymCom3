@@ -32,7 +32,13 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">{{ mission.humain.prenom }} {{ mission.humain.nom }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{ mission.fonction.nom }}</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% if humain.sexe == 'F' and mission.fonction.nomFeminin != null %}
+                                        {{ mission.fonction.nomFeminin }}
+                                    {% else %}
+                                        {{ mission.fonction.nom }} 
+                                    {% endif %} 
+                                </h6>
                                 <p class="card-text">
                                     {% for email in mission.humain.emails %}
                                         <span class="card-link">

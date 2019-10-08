@@ -176,8 +176,16 @@ class MairieController extends AbstractController
         $this->StructureRender(); 
         $repo = $this->getDoctrine()->getRepository(Association::class);
         
-        $associations = $repo->findAll();
-
+        $associations = array();
+        $types = array('sportive', 'humanitaire-caritative-social', 'loisirs', 'culturelle-artistique');
+        
+        foreach($types as $type)
+        {
+            $criteria = array('type' => $type);
+            $orderBy = array('type'=>'ASC', 'nom'=>'ASC');
+            $associations[$type] = $repo->findBy($criteria, $orderBy, $limit = null, $offset = null);
+        }
+        
         $this->structure['associations'] = $associations;
         return $this->render('mairie/associations.html.twig', $this->structure);
     }

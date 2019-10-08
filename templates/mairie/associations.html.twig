@@ -7,24 +7,36 @@
         <div class="container">
         <div class="row">
         
-            {% for association in associations %}
-                <div class="col-lg-4 col-md-6 col-sm-12">    
-                    <div class="card">
-                        {% if association.photo != null %}
-                            <img src="\img\{{ association.photo }}" class="card-img-top" alt="{{ association.nom }}">
-                        {% else %}
-                            <img src="\img\content\personnel\anonyme.jpg" class="card-img-top" alt="{{ association.nom }}">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ association.nom }}</h5>
-                            <p class="card-text">{{ association.presentation }}</p>                        
-                        </div>
-                        <div class="card-footer text-right">                        
-                            <a class="text-muted" href="{{ path('mairie_association', { 'id': association.id }) }}">En savoir plus</a>
+            {% for type, types in associations %}
+                {% if types|length > 0 %}
+                    <div class="col-12">
+                        <h2 class="h4 mb-3 mt-3">
+                            {% if type =='sportive' %}Les associations sportives :{% endif %}
+                            {% if type =='humanitaire-caritative-social' %}Les associations humanitaires, caritatives ou sociales :{% endif %}
+                            {% if type =='loisirs' %}Les associations de loisirs :{% endif %}
+                            {% if type =='culturelle-artistique' %}Les associations culturelles ou artistiques :{% endif %}
+                        </h2>
+                    </div>
+                    {% for association in types %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">    
+                        <div class="card">
+                            {% if association.photo != null %}
+                                <img src="\img\{{ association.photo }}" class="card-img-top" alt="{{ association.nom }}">
+                            {% else %}
+                                <img src="\img\content\personnel\anonyme.jpg" class="card-img-top" alt="{{ association.nom }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ association.nom }}</h5>
+                                <p class="card-text">{{ association.presentation }}</p>                        
+                            </div>
+                            <div class="card-footer text-right">                        
+                                <a class="text-muted" href="{{ path('mairie_association', { 'id': association.id }) }}">En savoir plus</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}        
+                {% endfor %}        
+                {% endif %}                
+            {% endfor %}
         </div>
         </div>
         
