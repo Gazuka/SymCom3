@@ -31,6 +31,16 @@ class Photo
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    public function __toString()
+    {
+        return $this->type." - ".$this->nom;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +78,18 @@ class Photo
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

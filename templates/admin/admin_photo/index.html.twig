@@ -1,0 +1,38 @@
+{% extends '_admin_base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+<div>
+                    
+                    {{ form_start(formdrag) }}
+                    {{ form_widget(formdrag) }}
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(formdrag) }}
+                </div>
+
+
+    <h1>Il reste {{ photoRestant }} photos à traiter.</h1>
+    {% if fini == false %}
+        <div class="jumbotron m-5">
+            <div class="row">
+                <div class="col-4">
+                    <img class="img-fluid" src="/photo_tmp/{{ dossier }}{{ photo.chemin }}" /> 
+                </div>
+                <div class="col-8">
+                    <h3>{{ photo.chemin }}</h3>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>    
+    {% else %}
+        <p>Plus de photos à traiter...</p>
+    {% endif %}
+    
+{% endblock %}

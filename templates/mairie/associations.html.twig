@@ -21,7 +21,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">    
                         <div class="card">
                             {% if association.photo != null %}
-                                <img src="\img\{{ association.photo }}" class="card-img-top" alt="{{ association.nom }}">
+                                <img src="\photo\{{ association.photo.chemin }}" class="card-img-top" alt="{{ association.nom }}">
                             {% else %}
                                 <img src="\img\content\personnel\anonyme.jpg" class="card-img-top" alt="{{ association.nom }}">
                             {% endif %}
